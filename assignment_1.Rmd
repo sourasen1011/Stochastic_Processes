@@ -193,8 +193,7 @@ observed passing the Harrison Building is a Ferrari.
 
 We have independence of events in the future from events in the past. Therefore P(next car Ferrari) = 0.1 **Ans**
 
-(c) Calculate the probability that exactly 2 BMWS pass by the Harrison Building in 30
-minutes.
+(c) Calculate the probability that exactly 2 BMWS pass by the Harrison Building in 30 minutes.
 
 The combined rate of passing is known to be $\lambda_{combined}=8/hr$. Since BMWs account for 50% of the volume, $\lambda_{BMW}=0.5*8=4/hr$
 
@@ -204,4 +203,125 @@ Hence, $P(N(t=1/2)=2) = \frac{(4\cdot\frac{1}{2})^2\cdot e^{-2}}{2!} = 2e^{-2} =
 (d) Calculate the probability that at least three cars (of any of those three types) pass by the
 Harrison building in 45 minutes.
 
+$\lambda=8$ and $t=3/4$, which implies $\lambda t=8*\frac{3}{4} = 6$
+
 $P(N(t=\frac{3}{4})\ge3) = 1-P(N(t=\frac{3}{4})<3) = 1 - P(N(t=\frac{3}{4})\le2) = 1 - \sum_{k=0}^{2}P(N(t=\frac{3}{4})=k)$
+
+$=1 - \frac{(6)^2e^{-6}}{2!} - \frac{(6)^1e^{-6}}{1!} - \frac{(6)^0e^{-6}}{0!}$
+$=1-0.04461 - 0.0148 - 0.00247 = 0.9380312$ **Ans**
+
+(e) Calculate the probability that the time between seeing the first Ferrari and the fifth Ferrari
+exceeds 2 hours.
+
+This can be interpreted as the time taken for 4 sightings of Ferraris is above 2 hours. Another way to look at it is that in 2 hours, 3 or fewer Ferraris are observed to pass. We know that the combined rate $\lambda_{combined}=8$. Since Ferraris account for 10% of that, we can say the rate of Ferraris passing is $\lambda_F=8*0.1=0.8$ and $t=2$. Therfore, $\lambda_F\cdot t=0.8*2=1.6$
+
+$P(S_4>2) = P(N(t=2)\le3) = \sum_{k=0}^{3}P(N(t=2)=k) = \sum_{k=0}^{3}\frac{(\lambda_F\cdot t)^ke^{(-\lambda_F\cdot t)}}{k!}$
+
+$= \sum_{k=0}^{3}\frac{1.6^ke^{-1.6}}{k!} = 0.9212$ **Ans**
+
+(f) What is the probability that it takes between 1 and 2 hours to see the 3rd BMW pass by the Harrison Building?
+
+From (c), we know that rate of BMWs passing Harrison building is $4/hr$. We need to calculate $P(1 \le S_3 \le 2)$ where $S_3$ is the time taken to see the 3rd BMW pass.
+
+$P(1 \le S_3 \le 2) = P(S_3 \le 2) - P(S_3 \le 1) = P(N(t=2)\ge 3) - P(N(t=1) \ge 3)$
+
+$= 1 - P(N(t=2)<3) - [1 - P(N(t=1) < 3)] = P(N(t=1)<3) - P(N(t=2)<3)$
+
+$= P(N(t=1) \le 2)-P(N(t=2) \le2 )$
+
+$= \sum_{k=0}^{2}P(N(t=1) = k)-P(N(t=2) = k )$
+
+$= \sum_{k=0}^{2} \frac{(4*1)^ke^{-4*1}}{k!} - \frac{(4*2)^ke^{-4*2}}{k!}$
+
+$= \sum_{k=0}^{2} \frac{(4*1)^ke^{-4}}{k!}(1 - 2^ke^{-4})$
+
+$=\frac{4^0e^{-4}}{0!}(1-2^0e^{-4}) + \frac{4^1e^{-4}}{1!}(1-2^1e^{-4}) + \frac{4^2e^{-4}}{2!}(1-2^2e^{-4}) = 0.2243$ **Ans**
+\
+```{r}
+v <- c(0,1,2)
+sum(4^v/factorial(v)*exp(-4)*(1 - 2^v*exp(-4)))
+```
+
+**4** Consider the random variable X with a zero-truncated Poisson distribution given by
+
+$P(X=0)=0,$ and $P(X=k)=c_{\lambda}\frac{\lambda^ke^{-\lambda}}{k!}, \ \lambda > 0, k \ge 1$
+
+(a) Find the constant $c_{\lambda}$ in terms of $\lambda$
+
+For this to be a valid probability distribution, $\sum_{k=0}^{\infty}P(X=k)=1$
+
+$\implies P(X=0) + \sum_{k=1}^{\infty}P(X=k)=1$
+
+$\implies 0 + \sum_{k=1}^{\infty}P(X=k)=1$
+
+$\implies \sum_{k=1}^{\infty}c_{\lambda}\frac{\lambda^ke^{-\lambda}}{k!}=1$
+
+$\frac{c_{\lambda}}{e^{\lambda}}\sum_{k=1}^{\infty}\frac{\lambda^k}{k!} = 1$
+
+$\sum_{k=1}^{\infty}\frac{\lambda^k}{k!} = \frac{e^{\lambda}}{c_{\lambda}}$
+
+$1+ \sum_{k=1}^{\infty}\frac{\lambda^k}{k!} =1+ \frac{e^{\lambda}}{c_{\lambda}}$
+
+$e^{\lambda} = \frac{e^{\lambda}}{c_{\lambda}}+1$
+
+$\frac{e^{\lambda}-1}{e^{\lambda}} = \frac{1}{c_{\lambda}}$
+
+$c_{\lambda} = \frac{e^{\lambda}}{e^{\lambda}-1}$
+
+(b) Derive the probability generating function for X and use it to find E[X] and Var(X)
+
+$G_X(\theta) = \sum_{k=0}^{\infty}\theta^kP(X=k) =\theta^0P(X=0) + \sum_{k=1}^{\infty}\theta^kP(X=k)$
+
+$\implies G_X(\theta) = \sum_{k=1}^{\infty}\theta^kP(X=k) = \sum_{k=1}^{\infty}\theta^k\frac{c_{\lambda}\lambda^ke^{-\lambda}}{k!}$
+
+$\implies G_X(\theta) = c_{\lambda}e^{-\lambda}\sum_{k=1}^{\infty}\frac{(\lambda\theta)^k}{k!} = c_{\lambda}e^{-\lambda}[\sum_{k=0}^{\infty}\frac{(\lambda\theta)^k}{k!}-1] = c_{\lambda}e^{-\lambda}(e^{\lambda\theta}-1)$
+
+$\implies G_X(\theta) =   \frac{e^{\lambda}}{e^{\lambda}-1}e^{-\lambda}(e^{\lambda\theta}-1)= \frac{e^{\lambda\theta}-1}{e^{\lambda}-1}$ **Ans**
+
+$E[X] = G_X'(\theta)|_{\theta=1} = \frac{1}{e^{\lambda}-1}\lambda e^{\lambda\theta}|_{\theta=1} = \frac{\lambda e^{\lambda\theta}}{e^{\lambda}-1}|_{\theta=1} = \frac{\lambda e^{\lambda}}{e^{\lambda}-1}$
+
+For variance, $Var[X] = E[X^2]-(E[X])^2$
+
+We know that $G_X''(\theta)|_{\theta=1} =E[X(X-1)] = E[X^2] - E[X]$
+
+$\implies E[X^2] - E[X] = \frac{d^2}{d\theta^2}(G_X(\theta))|_{\theta=1}=\frac{d}{d\theta}(\frac{\lambda e^{\lambda\theta}}{e^{\lambda}-1}) = \frac{\lambda^2 e^{\lambda\theta}}{e^{\lambda}-1} = \frac{\lambda^2 e^{\lambda}}{e^{\lambda}-1}$
+
+$\implies E[X^2] = \frac{\lambda^2 e^{\lambda}}{e^{\lambda}-1} + E[X]$
+
+$\implies E[X^2] = \frac{\lambda^2 e^{\lambda}}{e^{\lambda}-1} + \frac{\lambda e^{\lambda}}{e^{\lambda}-1}$
+
+$\implies Var[X] = E[X^2] - (E[X])^2 = \frac{\lambda e^{\lambda}}{e^{\lambda}-1}(\lambda+1) - (\frac{\lambda e^{\lambda}}{e^{\lambda}-1})^2$
+
+$\implies Var[X] = \frac{\lambda e^{\lambda}}{e^{\lambda}-1}(\lambda+1 - \frac{\lambda e^{\lambda}}{e^{\lambda}-1})$
+
+$\implies Var[X] = \frac{\lambda e^{\lambda}}{(e^{\lambda}-1)^2}(e^{\lambda}-(\lambda+1))$ **Ans**
+
+**(c)** Suppose that X and Y are two independent random variables each having a zero-truncated
+Poisson distribution with parameters $\lambda$ and $\mu$, respectively. Find the probability generating function for Z where Z = X + Y . Hence show that for $k \ge 2$:
+$P(Z = k) = C(\lambda, \mu, k)[(\lambda + \mu)^k - \lambda^k - \mu^k]$
+
+$G_X(\theta) = c_{\lambda}e^{-\lambda}[e^{\lambda\theta}-1]$
+$G_Y(\theta) = c_{\mu}e^{-\mu}[e^{\mu\theta}-1]$
+
+$G_Z(\theta) = G_X(\theta)G_Y(\theta) = \frac{c_{\lambda}c_{\mu}}{e^(\lambda+\mu)}[e^{\lambda\theta}-1][e^{\mu\theta}-1]$
+
+$\implies G_Z(\theta) = \frac{e^{\lambda}}{e^{\lambda}-1}\frac{1}{e^{\lambda}}\frac{e^{\mu}}{e^{\mu}-1}\frac{1}{e^{\mu}}[e^{\lambda\theta}-1][e^{\mu\theta}-1]$
+
+$\implies G_Z(\theta) = \frac{1}{e^{\lambda}-1}\frac{1}{e^{\mu}-1}[e^{\lambda\theta}-1][e^{\mu\theta}-1]$
+
+$\implies G_Z(\theta) = \frac{e^{(\lambda+\mu)\theta} - e^{\lambda\theta} - e^{\mu\theta} + 1}{(e^{\lambda} - 1)(e^{\lambda} - 1)}$
+
+$\implies G_Z(\theta) = \frac{1}{(e^{\lambda} - 1)(e^{\lambda} - 1)}[1 + \frac{(\lambda+\mu)\theta}{1!} + \frac{(\lambda+\mu)^2\theta^2}{2!} \frac{(\lambda+\mu)^3\theta^3}{3!} +  .... - (1 + \frac{(\lambda)\theta}{1!} + \frac{(\lambda)^2\theta^2}{2!} \frac{(\lambda)^3\theta^3}{3!} + ....) - (1 + \frac{(\mu)\theta}{1!} + \frac{(\mu)^2\theta^2}{2!} \frac{(\mu)^3\theta^3}{3!} + ....) + 1]$
+
+$\implies G_Z(\theta) = \frac{1}{(e^{\lambda} - 1)(e^{\lambda} - 1)}[\theta\frac{(\lambda + \mu) - \lambda - \mu}{1!} + \theta^2\frac{(\lambda + \mu)^2 - \lambda^2 - \mu^2}{2!} + \theta^3\frac{(\lambda + \mu)^3 - \lambda^3 - \mu^3}{3!} + ......]$
+
+
+$\implies G_Z(\theta) = \frac{1}{(e^{\lambda} - 1)(e^{\lambda} - 1)}[\theta^2\frac{(\lambda + \mu)^2 - \lambda^2 - \mu^2}{2!} + \theta^3\frac{(\lambda + \mu)^3 - \lambda^3 - \mu^3}{3!} + ......]$
+
+Following the above pattern, we can say that $P(Z=k)$ is the coefficient of $\theta^k$. Therefore,
+
+$P(Z=k) = \frac{1}{k!(e^{\lambda} - 1)(e^{\lambda} - 1)}[(\lambda + \mu)^k - \lambda^k - \mu^k]$
+
+This can be written as required in the question. 
+
+$P(Z=k) = C(\lambda,\mu, k)[(\lambda + \mu)^k - \lambda^k - \mu^k]$, where $C(\lambda,\mu, k) = \frac{1}{k!(e^{\lambda} - 1)(e^{\lambda} - 1)}$ **Ans**
