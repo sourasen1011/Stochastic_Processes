@@ -30,23 +30,36 @@ $=\frac{2}{3}(1-\frac{\theta}{3})^{-1}$
 $=\frac{2}{3}(1+\frac{\theta}{3}+(\frac{\theta}{3})^2+(\frac{\theta}{3})^3+....)$
 
 $=\frac{2}{3}\theta^0+\frac{2}{3^2}\theta^1+\frac{2}{3^3}\theta^2+\frac{2}{3^4}\theta^3+...$\
-\ 
+
+
 We observe from the above equation that $P(X=0) = \frac{2}{3}, P(X=1)=\frac{2}{3^2} , P(X=2) = \frac{2}{3^3}$ ....\
 \
 $G_Y(\theta) = \sum_{k}^{\infty}\theta^kP(Y=k) = \sum_{k}^{\infty}\theta^kP(X^2=k)$\
 
 $=\theta^0P(X^2=0)+\theta^1P(X^2=1)+...+\theta^4P(X^2=4)+....+\theta^9P(X^2=9)+\theta^{10}P(X^2=10)$\
+
 As X can only take on positive integer values, the only terms in the above equation which are non-zero are those associated where $X^2 \in \{0,1,4,9\}$\
+
 Therefore, $G_Y(\theta)=\theta^0P(X^2=0)+\theta^1P(X^2=1)+\theta^4P(X^2=4)+\theta^9P(X^2=9)$\
 $G_Y(\theta)=\theta^0P(X=0)+\theta^1P(X=1)+\theta^4P(X=2)+\theta^9P(X=3)$\
 
 $G_Y(\theta)=\frac{2}{3}\theta^0+\frac{2}{3^2}\theta^1+\frac{2}{3^3}\theta^4+\frac{2}{3^4}\theta^9$\ **Ans**
 
-Now, to calculate $E[Y]$, we evaluate $G'_Y(\theta)|_{\theta=1}  = [\frac{2}{3^2} + 4\theta^3\frac{2}{3^3} + 9\theta^8\frac{2}{3^4}]|_{\theta=1}$\
-$=\frac{2}{9}+\frac{4\cdot2}{27}+\frac{9\cdot2}{81} = 0.7407$ **Ans**
+Now, to calculate $E[Y]$, we can evaluate $E[X^2]$, which is as follows.
+$G''_X(\theta)|_{\theta=1} = E[X(X-1)] = E[X^2] - (E[X])$\
+$\implies G''_X(\theta)|_{\theta=1} = (-2)\cdot\frac{2}{(3-\theta)^3}\cdot(-1) |_{\theta=1} = \frac{4}{2^3} = 0.5$\
+$\implies E[X^2] - (E[X]) = 0.5$\
+
+To calculate $E[X]$, we have $G'_X(\theta)|_{\theta=1} = E[X]$\
+$\implies E[X] = \frac{2}{(3-\theta)^2}|_{\theta=1} = 0.5$
+
+Therefore, going back to our earlier equation, we have
+$\implies E[X^2] - (0.5) = 0.5$\
+$\implies E[X^2] = E[Y] = 1$ **Ans**
 
 (b) Suppose that Z is the random variable with probability generating function $G_Z(\theta) = G_X(G_X(\theta))$. Calculate $P(Z = 0), P(Z = 2)$, and $E[Z]$.\
 \
+
 $G_Z(\theta) = G_X(2(3-\theta)^{-1}) = 2(3 - \frac{2}{3-\theta})^{-1} = \frac{2(3-\theta)}{3(3-\theta)-2} = \frac{2(3 - \theta)}{7-3\theta}$\
 
 $\implies G_Z(\theta) = \frac{2}{3}\frac{9-3\theta}{7-3\theta} = \frac{2}{3}(1+\frac{2}{7-3\theta}) = \frac{2}{3} + \frac{2}{3}\cdot2\cdot(7-3\theta)^{-1}$\
@@ -58,7 +71,8 @@ $\implies G_Z(\theta) = \frac{2}{3} + \frac{4}{21}\cdot(1 + \frac{3}{7}\theta + 
 $\implies G_Z(\theta) = \frac{2}{3} + \frac{4}{21} + \frac{4}{21}\cdot(\frac{3}{7}\theta + (\frac{3}{7}\theta)^2 +  (\frac{3}{7}\theta)^3 + .....)$\
 
 $\implies G_Z(\theta) = \frac{18}{21} + \frac{4}{21}\cdot(\frac{3}{7}\theta + (\frac{3}{7}\theta)^2 +  (\frac{3}{7}\theta)^3 + .....)$\
-\
+
+
 From the above equation, we see that $P(Z=0)=\frac{18}{21}=0.8571$ **Ans**, $P(Z=2)=\frac{4}{21}\cdot\frac{3^2}{7^2}=0.0349$ **Ans**\
 
 Since $G_Z(\theta)=G^2_X(\theta)$, we know that $E[Z]=\mu_X^2$, where $\mu_X = E[X]$. 
@@ -98,7 +112,7 @@ $G_X(\theta) = (1-2\lambda)[1+\lambda\theta(\theta+1) + (\lambda\theta(\theta+1)
 
 It is clear from the above equation that $P(X=0)$ or the coefficient of $\theta^0$ is $(1-2\lambda)$
 
-For $G_X(\theta)$ to be a valid PGF, $0\le(1-2\lambda)\le1 \implies 0 < \lambda\le\frac{1}{2} \implies \lambda \in [0,\frac{1}{2})$ **Ans**
+For $G_X(\theta)$ to be a valid PGF, $0<(1-2\lambda)\le1 \implies 0 \le \lambda <\frac{1}{2} \implies \lambda \in [0,\frac{1}{2})$ **Ans**
 
 (b) For $\lambda=\frac{1}{4}$, $G_X(\theta)=\frac{1-2\lambda}{1-\lambda\theta-\lambda\theta^2}=\frac{1-2\cdot\frac{1}{4}}{1-\frac{1}{4}\theta - \frac{1}{4}\theta^2}=\frac{2}{4-\theta-\theta^2}$
 
@@ -124,9 +138,9 @@ Here, $P(S_1=2)$ is the coefficient of $\theta^2$, which is $(1-2\lambda)(\lambd
 Probability of extinction is given by the smallest root of the equation $G_X(e)=e$
 
 $G_X(e) = e \implies \frac{1-2\lambda}{1-\lambda e-\lambda e^2} = e$
-$1-2\lambda= e\cdot(1-\lambda e-\lambda e^2)$
-$1-2\lambda = e - \lambda e^2 - \lambda e^3$
-$\lambda e^3 + \lambda e^2 - e - 2\lambda + 1=0$
+$\implies 1-2\lambda= e\cdot(1-\lambda e-\lambda e^2)$
+$\implies 1-2\lambda = e - \lambda e^2 - \lambda e^3$
+$\implies \lambda e^3 + \lambda e^2 - e - 2\lambda + 1=0$
 
 We know that ($e$-1) must always be a factor as the probability of extinction is upper-bounded by 1.
 
@@ -191,7 +205,7 @@ Since all of the passing cars follow independent Poisson processes, P(next Merce
 (b) Given that the last car observed was a BMW, find the probability that the next car to be
 observed passing the Harrison Building is a Ferrari.
 
-We have independence of events in the future from events in the past. Therefore P(next car Ferrari) = 0.1 **Ans**
+We have independence of events in the future from events in the past. Therefore P(next car Ferrari) = $0.1$ **Ans**
 
 (c) Calculate the probability that exactly 2 BMWS pass by the Harrison Building in 30 minutes.
 
@@ -238,8 +252,8 @@ $= \sum_{k=0}^{2} \frac{(4*1)^ke^{-4}}{k!}(1 - 2^ke^{-4})$
 $=\frac{4^0e^{-4}}{0!}(1-2^0e^{-4}) + \frac{4^1e^{-4}}{1!}(1-2^1e^{-4}) + \frac{4^2e^{-4}}{2!}(1-2^2e^{-4}) = 0.2243$ **Ans**
 \
 ```{r}
-v <- c(0,1,2)
-sum(4^v/factorial(v)*exp(-4)*(1 - 2^v*exp(-4)))
+k <- c(0,1,2)
+sum(4^k/factorial(k)*exp(-4)*(1 - 2^k*exp(-4)))
 ```
 
 **4** Consider the random variable X with a zero-truncated Poisson distribution given by
@@ -300,28 +314,29 @@ $\implies Var[X] = \frac{\lambda e^{\lambda}}{(e^{\lambda}-1)^2}(e^{\lambda}-(\l
 Poisson distribution with parameters $\lambda$ and $\mu$, respectively. Find the probability generating function for Z where Z = X + Y . Hence show that for $k \ge 2$:
 $P(Z = k) = C(\lambda, \mu, k)[(\lambda + \mu)^k - \lambda^k - \mu^k]$
 
-$G_X(\theta) = c_{\lambda}e^{-\lambda}[e^{\lambda\theta}-1]$
-$G_Y(\theta) = c_{\mu}e^{-\mu}[e^{\mu\theta}-1]$
+$G_X(\theta) = c_{\lambda}e^{-\lambda}[e^{\lambda\theta}-1]$\
 
-$G_Z(\theta) = G_X(\theta)G_Y(\theta) = \frac{c_{\lambda}c_{\mu}}{e^(\lambda+\mu)}[e^{\lambda\theta}-1][e^{\mu\theta}-1]$
+$G_Y(\theta) = c_{\mu}e^{-\mu}[e^{\mu\theta}-1]$\ 
+
+$G_Z(\theta) = G_X(\theta)G_Y(\theta) = \frac{c_{\lambda}c_{\mu}}{e^{(\lambda+\mu)}}[e^{\lambda\theta}-1][e^{\mu\theta}-1]$
 
 $\implies G_Z(\theta) = \frac{e^{\lambda}}{e^{\lambda}-1}\frac{1}{e^{\lambda}}\frac{e^{\mu}}{e^{\mu}-1}\frac{1}{e^{\mu}}[e^{\lambda\theta}-1][e^{\mu\theta}-1]$
 
 $\implies G_Z(\theta) = \frac{1}{e^{\lambda}-1}\frac{1}{e^{\mu}-1}[e^{\lambda\theta}-1][e^{\mu\theta}-1]$
 
-$\implies G_Z(\theta) = \frac{e^{(\lambda+\mu)\theta} - e^{\lambda\theta} - e^{\mu\theta} + 1}{(e^{\lambda} - 1)(e^{\lambda} - 1)}$
+$\implies G_Z(\theta) = \frac{e^{(\lambda+\mu)\theta} - e^{\lambda\theta} - e^{\mu\theta} + 1}{(e^{\lambda} - 1)(e^{\mu} - 1)}$
 
-$\implies G_Z(\theta) = \frac{1}{(e^{\lambda} - 1)(e^{\lambda} - 1)}[1 + \frac{(\lambda+\mu)\theta}{1!} + \frac{(\lambda+\mu)^2\theta^2}{2!} \frac{(\lambda+\mu)^3\theta^3}{3!} +  .... - (1 + \frac{(\lambda)\theta}{1!} + \frac{(\lambda)^2\theta^2}{2!} \frac{(\lambda)^3\theta^3}{3!} + ....) - (1 + \frac{(\mu)\theta}{1!} + \frac{(\mu)^2\theta^2}{2!} \frac{(\mu)^3\theta^3}{3!} + ....) + 1]$
+$\implies G_Z(\theta) = \frac{1}{(e^{\lambda} - 1)(e^{\mu} - 1)}[1 + \frac{(\lambda+\mu)\theta}{1!} + \frac{(\lambda+\mu)^2\theta^2}{2!} \frac{(\lambda+\mu)^3\theta^3}{3!} +  .... - (1 + \frac{(\lambda)\theta}{1!} + \frac{(\lambda)^2\theta^2}{2!} \frac{(\lambda)^3\theta^3}{3!} + ....) - (1 + \frac{(\mu)\theta}{1!} + \frac{(\mu)^2\theta^2}{2!} \frac{(\mu)^3\theta^3}{3!} + ....) + 1]$
 
-$\implies G_Z(\theta) = \frac{1}{(e^{\lambda} - 1)(e^{\lambda} - 1)}[\theta\frac{(\lambda + \mu) - \lambda - \mu}{1!} + \theta^2\frac{(\lambda + \mu)^2 - \lambda^2 - \mu^2}{2!} + \theta^3\frac{(\lambda + \mu)^3 - \lambda^3 - \mu^3}{3!} + ......]$
+$\implies G_Z(\theta) = \frac{1}{(e^{\lambda} - 1)(e^{\mu} - 1)}[\theta\frac{(\lambda + \mu) - \lambda - \mu}{1!} + \theta^2\frac{(\lambda + \mu)^2 - \lambda^2 - \mu^2}{2!} + \theta^3\frac{(\lambda + \mu)^3 - \lambda^3 - \mu^3}{3!} + ......]$
 
 
-$\implies G_Z(\theta) = \frac{1}{(e^{\lambda} - 1)(e^{\lambda} - 1)}[\theta^2\frac{(\lambda + \mu)^2 - \lambda^2 - \mu^2}{2!} + \theta^3\frac{(\lambda + \mu)^3 - \lambda^3 - \mu^3}{3!} + ......]$
+$\implies G_Z(\theta) = \frac{1}{(e^{\lambda} - 1)(e^{\mu} - 1)}[\theta^2\frac{(\lambda + \mu)^2 - \lambda^2 - \mu^2}{2!} + \theta^3\frac{(\lambda + \mu)^3 - \lambda^3 - \mu^3}{3!} + ......]$
 
 Following the above pattern, we can say that $P(Z=k)$ is the coefficient of $\theta^k$. Therefore,
 
-$P(Z=k) = \frac{1}{k!(e^{\lambda} - 1)(e^{\lambda} - 1)}[(\lambda + \mu)^k - \lambda^k - \mu^k]$
+$P(Z=k) = \frac{1}{k!(e^{\lambda} - 1)(e^{\mu} - 1)}[(\lambda + \mu)^k - \lambda^k - \mu^k]$
 
 This can be written as required in the question. 
 
-$P(Z=k) = C(\lambda,\mu, k)[(\lambda + \mu)^k - \lambda^k - \mu^k]$, where $C(\lambda,\mu, k) = \frac{1}{k!(e^{\lambda} - 1)(e^{\lambda} - 1)}$ **Ans**
+$P(Z=k) = C(\lambda,\mu, k)[(\lambda + \mu)^k - \lambda^k - \mu^k]$, where $C(\lambda,\mu, k) = \frac{1}{k!(e^{\lambda} - 1)(e^{\mu} - 1)}$ **Ans**
