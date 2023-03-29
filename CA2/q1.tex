@@ -37,7 +37,7 @@ P_0 + P_1 + ... + P_K = 1\\
 (c) At steady state, expected number of customers at the bar is given by E[N].
 \begin{gather*}
 E[N] = \sum_{n=0}^{K}nP_n\\
-E[N] = \sum_{n=0}^{K}2n\rho^n\frac{1-\rho}{1+\rho - 2\rho^{K+1}}\\
+E[N] = \sum_{n=1}^{K}n\cdot2\rho^n\frac{1-\rho}{1+\rho - 2\rho^{K+1}}\\
 E[N] = \frac{2(1-\rho)}{1+\rho - 2\rho^{K+1}}\sum_{n=0}^{K}n\rho^n\\
 E[N] = \frac{2(1-\rho)}{1+\rho - 2\rho^{K+1}}[\rho + 2\rho^2 + 3\rho^3 + ... + K\rho^K]\\
 E[N] = \frac{2(1-\rho)}{1+\rho - 2\rho^{K+1}}[\rho \cdot \frac{d}{d\rho} (1 + \rho + \rho^2 + \rho^3 + ... + \rho^K)]\\
