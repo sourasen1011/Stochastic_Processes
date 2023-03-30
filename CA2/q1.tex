@@ -4,7 +4,7 @@ may assume that arrivals are a Poisson process with rate $\lambda$ and each of t
 customers according to a Poisson process with rate $\mu$.
 
 (a) 
-The Kendall notation for the above Markov chain is M/M/2
+The Kendall notation for the above Markov chain is M/M/2 \textbf{Answer}
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{M-chains.jpg}
@@ -18,7 +18,8 @@ The Kendall notation for the above Markov chain is M/M/2
 ...\\
 \lambda P_{n-1} = 2\mu P_{n}\ \implies P_n = \frac{\lambda}{2\mu}P_{n-1} = 2\rho^n P_0\\
 ...\\
-\lambda P_{K-1} = 2\mu P_{K}\ \implies P_K = \frac{\lambda}{2\mu}P_{K-1} = 2\rho^K P_0
+\lambda P_{K-1} = 2\mu P_{K}\ \implies P_K = \frac{\lambda}{2\mu}P_{K-1} = 2\rho^K P_0\\
+\textbf{Answer}
 \end{gather*}
 
 We know that the sum of probabilities must add up to 1.
@@ -30,11 +31,10 @@ P_0 + P_1 + ... + P_K = 1\\
 \implies P_0(2\cdot \frac{1 - \rho^{K+1}}{1-\rho} - 1) = 1, \ \text{using given hint} \\
 \implies P_0(2 - 2\rho^{K+1} - 1 + \rho) = 1 - \rho\\
 \implies P_0(1 + \rho - 2\rho^{K+1}) = 1 - \rho\\
-\implies P_0 = \frac{1-\rho}{1+\rho - 2\rho^{K+1}}\\
-\implies P_n = 2\rho^n\frac{1-\rho}{1+\rho - 2\rho^{K+1}},\ \text{for $n\ge1$}
+\implies P_0 = \frac{1-\rho}{1+\rho - 2\rho^{K+1}}\ \textbf{Answer}\ \implies P_n = 2\rho^n\frac{1-\rho}{1+\rho - 2\rho^{K+1}},\ \text{for $n\ge1$} \textbf{Answer}
 \end{gather*}
 
-(c) At steady state, expected number of customers at the bar is given by E[N].
+(c) At steady state, expected number of customers at the bar ($L_q$) can be denoted by E[N].
 \begin{gather*}
 E[N] = \sum_{n=0}^{K}nP_n\\
 E[N] = \sum_{n=1}^{K}n\cdot2\rho^n\frac{1-\rho}{1+\rho - 2\rho^{K+1}}\\
@@ -44,7 +44,7 @@ E[N] = \frac{2(1-\rho)}{1+\rho - 2\rho^{K+1}}[\rho \cdot \frac{d}{d\rho} (1 + \r
 E[N] = \frac{2\rho(1-\rho)}{1+\rho - 2\rho^{K+1}}\frac{d}{d\rho} (\frac{1 - \rho^{K+1}}{1 - \rho}), \ \text{using given hint as K is a positive integer} \\
 E[N] = \frac{2\rho(1-\rho)}{1+\rho - 2\rho^{K+1}}\frac{(1-\rho)(-(K+1)\rho^K) - (1 - \rho^{K+1})(-1)}{(1-\rho)^2}\\
 E[N] = \frac{2\rho(1-\rho)}{1+\rho - 2\rho^{K+1}}\frac{-(K+1)\rho^K + (K+1)\rho^{K+1}+1 - \rho^{K+1}}{(1-\rho)^2}\\
-E[N] = \frac{2\rho}{1+\rho - 2\rho^{K+1}}\frac{1 - (K+1)\rho^K + K\rho^{K+1}}{(1-\rho)}
+E[N] = \frac{2\rho}{1+\rho - 2\rho^{K+1}}\frac{1 - (K+1)\rho^K + K\rho^{K+1}}{(1-\rho)}\ \textbf{Answer}
 \end{gather*}
 
 When $K\to\infty$ and $\rho < 1$,
@@ -52,15 +52,42 @@ When $K\to\infty$ and $\rho < 1$,
 \lim_{K\to\infty}E[N] = \lim_{K\to\infty} \frac{2\rho}{1+\rho - 2\rho^{K+1}}\frac{1 - (K+1)\rho^K + K\rho^{K+1}}{(1-\rho)}\\
 \lim_{K\to\infty}E[N] = \frac{2\rho}{1+\rho - 0}\frac{1 - 0 + 0}{(1-\rho)}
 \end{gather*}
-Note: We see terms with $\rho^{K}$ or $\rho^{K+1}$ becoming 0 as such terms drop to 0 exponentially fast thus offsetting their coefficients, which tend to inifinity. Thus, we see that for $K\to\infty$ and $\rho<1$, $E[N]\to\frac{2\rho}{1-\rho^2}$
+Note: We see terms with $\rho^{K}$ or $\rho^{K+1}$ becoming 0 as such terms drop to 0 exponentially fast thus offsetting their coefficients, which tend to inifinity. Thus, we see that for $K\to\infty$ and $\rho<1$, $E[N]\to\frac{2\rho}{1-\rho^2}$ \textbf{Answer}
 
-(d) Using Little's Law, we find the average waiting time as $W_s = \frac{E[N]}{\lambda_{eff}}$. To derive an expression for $\lambda_{eff}$, we have
+(d) Using Little's Law, we find the average waiting time as \\
+$W_s = \frac{L_s}{\lambda_{eff}} = \frac{E[N]}{\lambda_{eff}}$ and $W_q = \frac{L_q}{\lambda_{eff}}$  \textbf{Answer}
+
+To derive an expression for $\lambda_{eff}$, we have
 \begin{gather*}
 \lambda_{eff} = \sum_{n=0}^{K}\lambda_n P_n = \sum_{n=0}^{K-1}\lambda_n P_n = \lambda(1-P_K),\ \text{(as $\lambda_K = 0)$}\\
 \lambda_{eff} = \lambda \left[1 - \frac{2\rho^K(1-\rho)}{1 + \rho - 2\rho^{K+1}} \right]\\
 \lambda_{eff} = \lambda \left[\frac{1 + \rho - 2\rho^{K+1} - 2\rho^K +2\rho^{K+1}}{1 + \rho - 2\rho^{K+1}} \right]\\
-\lambda_{eff} = \lambda \left[\frac{1 + \rho - 2\rho^K}{1 + \rho - 2\rho^{K+1}} \right]
+\lambda_{eff} = \lambda \left[\frac{1 + \rho - 2\rho^K}{1 + \rho - 2\rho^{K+1}} \right] \ \textbf{Answer}
 \end{gather*}
+
+We can further expand $W_s$ and $W_q$ by computing the respective ratios.
+\begin{gather*}
+W_s = \frac{L_s}{\lambda_{eff}} =  \frac{E[N]}{\lambda_{eff}} = \left(\frac{2\rho}{1+\rho - 2\rho^{K+1}}\frac{1 - (K+1)\rho^K + K\rho^{K+1}}{(1-\rho)}\right) / \left(\lambda \frac{1 + \rho - 2\rho^{K}}{1 + \rho - 2\rho^{K+1}}\right)\\
+W_s = \left(\frac{2\rho}{(1-\rho)}\frac{1 - (K+1)\rho^K + K\rho^{K+1}}{\lambda (1 + \rho - 2\rho^{K})}\right)
+\end{gather*}
+
+To find $W_q$, we need to calculate $L_q$.
+\begin{gather*}
+L_q = \sum_{n=2}^{K} (n-2)P_n = P_3 + 2P_4 + 3P_5 + \cdots + (K-2)P_K\\
+= 2\rho^3P_0 + 2 \cdot 2\rho^4 P_0 + 3 \cdot 2\rho^5 P_0 + \cdots + (K-2)\cdot 2 \rho^K P_0\\
+= 2\rho^3P_0(1 + 2\rho + 3 \rho^2 + \cdots + (K-2)\rho^{K-3})\\
+= 2\rho^3P_0\left[\frac{d}{d\rho}(\rho + \rho^2 + \rho^3 + \cdots + \rho^{K-2})\right]\\
+= 2\rho^3P_0\left[\frac{d}{d\rho}\left(\frac{1 - \rho^{K-1}}{1-\rho}\right)\right]\\
+= 2\rho^3P_0\left[\frac{(1-\rho)(-(K-1)\rho^{K-2}) - (1-\rho^{K-1})(-1)}{(1-\rho)^2}\right]\\
+= 2\rho^3\frac{(1 - \rho)}{1+\rho-2\rho^{K+1}}\left[\frac{1 - \rho^{K-1} - (K-1)(\rho^{K-2} - \rho^{K-1})}{(1-\rho)^2}\right]\\
+= \frac{2\rho^3}{1+\rho-2\rho^{K+1}}\left[\frac{1 + (K-2)\rho^{K-1} - (K-1)\rho^{K-2}}{(1-\rho)}\right]
+\end{gather*}
+Substituting the value of $L_q$ in $W_q = \frac{L_q}{\lambda_{eff}}$,
+\begin{gather*}
+W_q = \frac{2\rho^3}{1+\rho-2\rho^{K+1}}\left[\frac{1 - (K-1)\rho^{K-2}+ (K-2)\rho^{K-1} }{(1-\rho)}\right]  / \left(\lambda \frac{1 + \rho - 2\rho^{K}}{1 + \rho - 2\rho^{K+1}}\right)\\
+W_q = \left(\frac{2\rho^3}{(1-\rho)}\frac{1 - (K-1)\rho^{K-2}+ (K-2)\rho^{K-1} }{\lambda (1 + \rho - 2\rho^{K})}\right)
+\end{gather*}
+
 (e) Probability at steady state of having 2 or more customers at the bar is found as
 \begin{gather*}
 P(N\ge2) = P(N=2) + P(N=3) + ... + P(N=k)\\
@@ -69,7 +96,7 @@ P(N\ge2) = P(N=2) + P(N=3) + ... + P(N=k)\\
 =\frac{(1-\rho)}{1 + \rho - 2\rho^{K+1}}(2\rho^2 + 2\rho^3 + ... + 2\rho^K)\\
 =\frac{(1-\rho)}{1 + \rho - 2\rho^{K+1}}\cdot 2\rho^2(1 + \rho + ...+ \rho^{K-2})\\
 =\frac{2(1-\rho)\rho^2}{1 + \rho - 2\rho^{K+1}}\cdot\left[\frac{1-\rho^{K-1}}{1-\rho}\right]\\
-=\frac{2\rho^2}{1 + \rho - 2\rho^{K+1}}\cdot\left[1-\rho^{K-1}\right]
+=\frac{2\rho^2}{1 + \rho - 2\rho^{K+1}}\cdot\left[1-\rho^{K-1}\right]\ \textbf{Answer}
 \end{gather*}
 
 When $K\to\infty$,
@@ -79,4 +106,4 @@ When $K\to\infty$,
 \implies 6\rho^2 - \rho - 1< 0
 \end{gather*}
 
-Solving the above, we get $\frac{-1}{3}<\rho<\frac{1}{2}$. However, the first part of this is non-sensical as $\rho$ cannot be less than 0 (both $\lambda$ and $\mu$ are positive). Taking that into account, the possible range of values for $\rho$ is given as $0 < \rho < \frac{1}{2}$.
+Solving the above, we get $\frac{-1}{3}<\rho<\frac{1}{2}$. However, the first part of this is non-sensical as $\rho$ cannot be less than 0 (both $\lambda$ and $\mu$ are positive). Taking that into account, the possible range of values for $\rho$ is given as $0 < \rho < \frac{1}{2}$ \ \textbf{Answer}.

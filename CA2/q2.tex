@@ -16,7 +16,7 @@ Here $T_{ij} = P(X_n = j | X_{n-1} = i)$ for all $i,j \in \{1,2,3,4,5\}$, and $\
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{T-ij.jpg}
-\caption{\label{fig:T-ij}State transition diagram}
+\caption{\label{fig:T-ij}State transition diagram\ \textbf{Answer}}
 \end{figure}
 \textbf{State 2}
 To prove that state 2 is positively recurrent, we need to prove that the mean recurrence time $\mu=\sum_{n=1}^{\infty}nf_{i}^{(n)} < \infty$. First, we check the times of first return.
@@ -31,7 +31,7 @@ f_2^{(5)} = 0 \\
 Note that the process cannot return to state 2 for the \textit{first} time after more than 2 steps - by the 3rd or 4th time (and indeed any step more than that), it will already be \textit{revisiting} state 2. Calculate the mean recurrence time $\mu= 1\cdot f_{2}^{(1)} + 2\cdot f_{2}^{(2)} + 3\cdot f_{2}^{(3)} + 4\cdot f_{2}^{(4)} + \cdots$\\
 $\implies \mu = 1\cdot 0 + 2\cdot 1 + 3\cdot 0 + 4\cdot 0 + \cdots$\\
 $\implies \mu = 2 < \infty$,
-Therefore, state 2 is positively recurrent.
+Therefore, state 2 is positively recurrent.\ \textbf{Answer}
 
 \textbf{State 5} To see if state 5 is transient, we check if sum of times of first return is $< 1$.
 \begin{gather*}
@@ -43,11 +43,12 @@ f_5^{(5)} = 0 \\
 \vdots\\
 \sum_{n=1}^{\infty}f_{5}^{(n)} = \frac{1}{2}(1 - \beta)
 \end{gather*}
-It is not dependent on $\alpha$, but for $0<\beta<1$, the sum is lesser than 1, which means that state 5 is transient. We notice that similar to state 2, the process cannot return to state 5 for the \textit{first} time after more than 2 steps - it will have already visited it before (on the first or second step).
+It is not dependent on $\alpha$, but for $0<\beta<1$, the sum is lesser than 1, which means that state 5 is transient.\ \textbf{Answer}\\
+We notice that similar to state 2, the process cannot return to state 5 for the \textit{first} time after more than 2 steps - it will have already visited it before (on the first or second step).
 
 (b) For fixed $\alpha , \beta > 0$, it can be seen that there are two sub-chains: 1-2-3 and 4-5.
 
-Following are the classifications of the states:
+Following are the classifications of the states: \ \textbf{Answer}
 
 \textbf{State 1}: It is periodic as for $k = 2$, $(T^n)_{11} > 0$ for all $n = k,2k,3k...$ and $(T^n)_{11} = 0$ for all $n \neq k,2k,3k...$. To elaborate, starting at state 1, the system can return to state 1 after 2,4,6... steps, but cannot return to it after 1,3,5... steps.
 
@@ -57,7 +58,7 @@ Following are the classifications of the states:
 
 \textbf{States 4 \& 5}: There is a probability of $\beta$ of the system leaving state 4 (and thus the subchain) and never being able to return to it. So states  4 and 5 area transient.
 
-The criteria for a subchain to be \textit{ergodic} is for it to be both aperiodic and positively recurrent. Suchain 1-2-3 violates the condition for aperiodicity. Suchain 4-5 violates the condition of positively recurrent. Thus, neither subchain is ergodic.
+The criteria for a subchain to be \textit{ergodic} is for it to be both aperiodic and positively recurrent. Suchain 1-2-3 violates the condition for aperiodicity. Suchain 4-5 violates the condition of positively recurrent. Thus, neither subchain is ergodic. \ \textbf{Answer}
 
 (c) To find the steady state probability vector in terms of $\alpha$ and $\beta$., we can solve the eigenvector equation $\tilde{P} = \tilde{P}T$.
 
@@ -100,8 +101,8 @@ We can now say that $P_1 + P_2 + P_3=1$ as the sum of the steady state probabili
 P_1 + P_2 + P_3 = 1\\
 P_2(1-\alpha) + P_2 + P_2\alpha = 1\\
 P_2(1 - \alpha + 1 - \alpha) = 1\\
-P_2 = \frac{1}{2}\\
-\implies P_1 = \frac{1-\alpha}{2} \ \& \ P_3 = \frac{\alpha}{2}
+P_2 = \frac{1}{2}\ \textbf{Answer}\\
+\implies P_1 = \frac{1-\alpha}{2} \ \& \ P_3 = \frac{\alpha}{2}\ \textbf{Answer}
 \end{gather*}
 (d)  Suppose now $\alpha := \alpha_n = \frac{n}{n + 1}$, so that now $T \equiv T(n)$ is a time dependent transition
 matrix. This amends the state transition diagram to 
@@ -135,7 +136,7 @@ After the second term, every subsequent pair of terms cancels each other out, le
 \mu=\sum_{n=1}^{\infty}nf_{1}^{(n)} =  2\cdot\frac{1}{3} + 4\cdot(\frac{2}{3}\cdot\frac{1}{5}) + 6\cdot(\frac{2}{3}\cdot\frac{4}{5}\cdot\frac{1}{7}) + 8\cdot(\frac{2}{3}\cdot\frac{4}{5}\cdot\frac{6}{7}\cdot\frac{1}{9}) + \cdots\\
 \mu=\sum_{n=1}^{\infty}nf_{1}^{(n)} =  \frac{2}{3} + (\frac{4}{3}\cdot\frac{1}{5}) + (\frac{2}{3}\cdot\frac{4}{5}\cdot\frac{6}{7}) + (\frac{2}{3}\cdot\frac{4}{5}\cdot\frac{6}{7}\cdot\frac{8}{9}) + \cdots
 \end{gather*}
-The $nth$ term can be represented as $t_n = \prod_{i=1}^{n}(1-a_n)$, where $a_n = (2n+1)^{-1}$
+The $nth$ term can be represented as $t_n = \prod_{i=1}^{n}(1-a_i)$, where $a_n = (2n+1)^{-1}$
 
 As a series, we can rewrite $t_n$
 \begin{gather*}
@@ -164,4 +165,4 @@ We have $a_n = \frac{1}{2n+1}, \ b_n = \frac{1}{n}$, the latter denoting the har
 \begin{gather*}
 \lim_{n\to\infty} \frac{a_n}{b_n} = \lim_{n\to\infty} \frac{\frac{1}{2n+1}}{\frac{1}{n}} = \lim_{n\to\infty} \frac{n}{2n+1} = \frac{1}{2}, \text{L'Hospital rule}
 \end{gather*}
-As we know that the harmonic series diverges, the series with $nth$ term $a_n = \frac{1}{2n+1}$ also diverges. Therefore the series with nth term $t_n$, which is greater than $a_n$, must also diverge. Hence, the mean recurrence time $\mu$ diverges. This proves that the state 1 is null recurrent.
+As we know that the harmonic series diverges, the series with $nth$ term $a_n = \frac{1}{2n+1}$ also diverges. Therefore the series with nth term $t_n$, which is greater than $a_n$, must also diverge. Hence, the mean recurrence time $\mu$ diverges. This proves that the state 1 is null recurrent \textbf{Answer}.
