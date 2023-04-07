@@ -104,50 +104,51 @@ This project is about Non-Homogeneous Poisson processes and how to simulate them
 
 This report will be loosely structured according to the following points:
 \begin{enumerate}
-\item Explanataion of what is meant by a Non-Homogeneous Poisson Process (NHPP) accompanied by clear mathematical definition.
-\item Review of the thinning algorithm of Lewis and Shedler (1979) for simulating NHPP. Short description of the algorithm explaining briefly why it works, and its main benefits compared to other approaches.
-\item Simulation of occurrence of 1000 successive events ${t_1, t_2, . . . , t_{1000}}$ for a homogeneous Poisson process having a rate of 8 events per year. Visual representation of the same.
+\item Explanataion of what is meant by a Non-Homogeneous Poisson Process (NHPP) accompanied by clear mathematical definition;
+\item Review of the thinning algorithm of Lewis and Shedler (1979) for simulating NHPP, with brief description of the algorithm, and its main benefits compared to other approaches;
+\item Simulation of occurrence of 1000 successive events ${t_1, t_2, . . . , t_{1000}}$ for a homogeneous Poisson process having a rate of 8 events per year, followed by visual representation of the same;
 %Denoting the number of events in the time interval $[0, t]$ by $N(t)$, make a figure showing $N(t_i)$ versus $t_i$ for $i = 1, 2, . . . , 1000$ and comment on the main features that can be seen.
-\item Considering a NHPP that has a rate function that increases smoothly from 1 event per year at $t = 0$ by 1\% per year, i.e. $(t) = (1.01)^t$. Determining whether the thinning algorithm can be used to simulate this process from the previous homogeneous Poisson process data.
-\item Code to perform the thinning algorithm and use it to find occurence times for a NHPP having the rate function $\lambda(t) = (1.01)^t$.
-\item Make a figure showing $N(t)$ versus $t$ for your NHPP simulation and compare it to what was shown in the figure for the homogeneous Poisson process. By integrating the rate function, add a line to your figure showing the expectation $E[N(t)]$ versus $t$.
+\item Determining whether the thinning algorithm can be used on the previous homogeneous Poisson process data to simulate an NHPP with a rate function that increases smoothly from 1 event per year at $t = 0$ by 1\% per year, i.e. $(t) = (1.01)^t$;
+\item Code to find occurence times for a NHPP having the rate function $\lambda(t) = (1.01)^t$ by using the thinning algorithm;
+\item Comparison of the plots of HPP and NHPP to demonstrate differences between the two.
+
+%Make a figure showing $N(t)$ versus $t$ for your NHPP simulation and compare it to what was shown in the figure for the homogeneous Poisson process. By integrating the rate function, add a line to your figure showing the expectation $E[N(t)]$ versus $t$.
 \end{enumerate}
 
 \section{\label{q:1}Description and Mathematical Definition}
 The following section details what is meant by a Non-Homogeneous Poisson Process (NHPP) giving a clear
 mathematical definition.\\
 
-A non-homogeneous Poisson process can be thought of as a generalization of the homogeneous Poisson process, in that, as opposed to its homogeneous counterpart where rate of occurrence of events is constant (denoted by $\lambda$), here the rate is a function of time, denoted by $\lambda(t)$. Thus, the number of occrrences in the interval $(0,T]$ follows Poisson distribution $Pois(\int_{0}^{T}\lambda(t)dt)$. More formally, allowing the rate parameter to vary with time results in the following definition.
-\begin{definition}[Ross, 2009, p.339, Definition 5.4] The counting process ${N(t), t \ge 0}$ is said to be a nonhomogeneous Poisson process with intensity function $\lambda(t) \ge 0, t \ge 0$, if
+A non-homogeneous Poisson process can be thought of as a generalization of the homogeneous Poisson process. As opposed to its homogeneous counterpart where rate of occurrence of events is constant (denoted by $\lambda$), here the rate is a function of time, denoted by $\lambda(t)$. Thus, the number of occrrences in the interval $(0,T]$ follows Poisson distribution $Pois(\int_{0}^{T}\lambda(t)dt)$. More formally, allowing the rate parameter to vary with time results in the following definition.
+\begin{definition}[Ross, 2006, p.339, Definition 5.4] \cite{Ross_2006} The counting process ${N(t), t \ge 0}$ is said to be a nonhomogeneous Poisson process with intensity function $\lambda(t) \ge 0, t \ge 0$, if
 \begin{enumerate}
-\item $N(0) = 0$.
-\item The process has independent increments.
-\item $P{N(t + h) - N(h) = 1} = \lambda(t)h + o(h)$.
-\item $P{N(t + h) - N(h) \ge 2} = o(h)$.
+\item $N(0) = 0$
+\item The process has independent increments
+\item $P{N(t + h) - N(h) = 1} = \lambda(t)h + o(h)$
+\item $P{N(t + h) - N(h) \ge 2} = o(h)$
 \end{enumerate}
-where $o(h)$ denotes higher order terms of $h$
+where $o(h)$ denotes higher order terms of $h$.
 \end{definition}
 
-Time sampling an ordinary Poisson process (with constant rate $\lambda$) results in a Non-Homogeneous Poisson process. Given $\{N(t), t \ge 0\}$, a Poisson process wih rate $\lambda$, if the event occurring at time $t$ is counted with probability $p(t)$, then $\{N_c(t) , t\ge 0\}$ is a Non-Homogeneous Poisson process. <Insert reference>
+Time sampling an ordinary Poisson process (with constant rate $\lambda$) results in a Non-Homogeneous Poisson process. Given $\{N(t), t \ge 0\}$, a Poisson process wih rate $\lambda$, if the event occurring at time $t$ is counted with probability $p(t)$, then $\{N_c(t) , t\ge 0\}$ is a Non-Homogeneous Poisson process \cite{Ross_2006}.
 
 \section{\label{q:2}Review of the Thinning Algorithm}
 
 
-\subsubsection{Some other other algorithms}
-There exist other algorithms for simulating Poisson processes, some of which we will discuss now.
+\subsubsection{Some Other Algorithms}
+There exist other algorithms for simulating Poisson processes.
 \begin{enumerate}
 \item Time-scale transformation of a homogeneous Poisson process via inverse of the integrated rate function $\Lambda(x)$
 \item Generate intervals between the points individually
 \item Order statistics from Poisson variates
 \item Log-linear rate function
 \end{enumerate}
-\subsubsection{The thinning algorithm}
+\subsubsection{The Thinning Algorithm}
 To construct a Non-Homogeneous Poisson process $\{N(t) , t \ge 0 \}$, with rate parameter $\lambda(t)$, over the interval $(0,T]$, the algorithm starts with a Non-Homogeneous Poisson process $\{N^{*}(t) , t \ge 0 \}$, with rate parameter $\bar{\lambda}(t)$ that dominates the set $\lambda(t)$ for all $t \in (0,T]$, that is 
 \begin{gather*}
 \bar{\lambda}(t) \ge \lambda(t) \forall t \in (0,T]\\
 \bar{\lambda}(t) = sup_{t\in(0,T]}\lambda(t)
 \end{gather*}
-
 Then, for all $t$, the point from the dominating NHPP is retained with probability $\lambda(t)/\bar{\lambda}$. The remaining points form a NHPP with rate parameter $\lambda(t)$. It is noted that since points are deleted independently, the number of points in $\{N(x) : x \ge 0\}$ in any set of non-overlapping intervals are mutually independent.
 
 \begin{algorithm}
@@ -175,8 +176,8 @@ $m = m + 1$
 }
 \end{algorithm}
 
-\subsubsection{Benefits over other algorithms}
-The paper discusses a few other methods with which to simulate NHPP. However, each method entails drawbacks with respect to computational efficiency. in its simplest implementation (<insert reference>), the thinning method obviates the need for numerical integration of the rate function, for ordering of points, and for generation of Poisson variates. 
+\subsubsection{Benefits Over Other Algorithms}
+Each method has drawbacks with respect to computational efficiency. In its simplest implementation, the thinning method ``\textit{obviates the need for numerical integration of the rate function, for ordering of points, and for generation of Poisson variates}'' \cite{lewis_shedler_1979}. 
 
 \section{\label{q:3}Simulation of a Homogeneous Poisson process}
 
@@ -198,7 +199,7 @@ Set $n = n + 1 $\;
 }
 \end{algorithm}
 
-Uniform random numbers are used to generate Poisson variates by using the following algorithm, that can be found in <Insert reference>. Full implementation in Python can be found in the Appendix. Figure \ref{fig:hpp} shows the result of simulating a homogeneous Poisson process.
+Uniform random numbers are used to generate Poisson variates by using the following algorithm, that can be found in \cite{chen}. Full implementation in Python can be found in the Appendix. Figure \ref{fig:hpp} shows the result of simulating a homogeneous Poisson process.
 
 \begin{figure}[H]
 \centering
@@ -206,17 +207,16 @@ Uniform random numbers are used to generate Poisson variates by using the follow
 \caption{\label{fig:hpp}Simulation of the time of occurrence of 1000 successive events for a homogeneous Poisson process having a rate of 8 events per year. $N(t)$ denotes the number of events occurring in the time period $[0,t]$.}
 \end{figure}
 
-The observation is made that the graph appears relatively linear. This would be expected as the rate of occurrence of events remains constant over any interval of time $(a,b)$ and hence the slope corresponding to the number of events over time (i.e. rate) also remains the same.
+The graph appears relatively linear. This would be expected as the rate of occurrence of events remains constant over any interval of time $(a,b)$ and hence the slope corresponding to the number of events over time (i.e. rate) also remains the same.
 
 \section{\label{q:4}NHPP with a smoothly increasing rate function}
 
-A NHPP is considered with a rate function that increases smoothly from 1 event per year at $t = 0$ by $1\%$ per year, i.e. $\lambda(t) = (1.01)^t$. Looking at the previous homogeneous Poisson process from \ref{q:3}
-, it can be seen that the maximum time taken to accumulate 1000 events is \~140. Figure \ref{fig:hpp_many_sim} shows this. Therefore, the maximum rate for the NHPP would be $(1.01)^{140} = 4.027$. Recall that the rate for the previous homogeneous Poisson process was 8. Hence, this is within the bounds of the original process. Thinning can be applied to simulate the NHPP from the previous HPP data.
+An NHPP is considered with a rate function that increases smoothly from 1 event per year at $t = 0$ by $1\%$ per year, i.e. $\lambda(t) = (1.01)^t$. Looking at the previous homogeneous Poisson process from \ref{q:3}, it can be seen that the maximum time taken to accumulate 1000 events is $\sim140$. Figure \ref{fig:hpp_many_sim} shows this. Therefore, the maximum rate for the NHPP would be $(1.01)^{140} = 4.027$. The rate for the previous homogeneous Poisson process was 8. Hence, this is within the bounds of the original process. Thinning can be applied to simulate the NHPP from the previous HPP data.
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{HPP_many_sim.png}
-\caption{\label{fig:hpp_many_sim}Time in years to accumulate 1000 events at 8 per year}
+\caption{\label{fig:hpp_many_sim}Time in years to accumulate 1000 events at 8 per year. 10,000 iterations performed to generate histogram.}
 \end{figure}
 
 \section{\label{q:5}Perform the Thinning Algorithm with data from Homogeneous Poisson Process}
