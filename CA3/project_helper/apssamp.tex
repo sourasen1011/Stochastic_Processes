@@ -237,235 +237,13 @@ By integrating the rate function, we get
 =1.01^t/ln(1.01) + C
 \end{gather*}
 
-Noting the boundary condition that at $t=0$, $E[N(t)]=0$, we have $C = \frac{1.01^0}{ln(1.01)} = 100.499$. Thus,  $E[N(t)] = frac{1.01^0}{ln(1.01)} - 100.499$. Plotting this onto the earlier graph, Figure \ref{fig:nhppent} is obtained. It can be seen that the orange line closely follows the blue stepped graph.
+Noting the boundary condition that at $t=0$, $E[N(t)]=0$, we have $C = \frac{1.01^0}{ln(1.01)} = 100.499$. Thus,  $E[N(t)] = \frac{1.01^0}{ln(1.01)} - 100.499$. Plotting this onto the earlier graph, Figure \ref{fig:nhppent} is obtained. It can be seen that the orange line closely follows the blue stepped graph.
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{NHPP_ENt.png}
 \caption{\label{fig:nhppent}$E[N(t)]$, denoted by $\frac{1.01^0}{ln(1.01)} - 100.499$ superimposed on the NHPP}
 \end{figure}
-
-Table~\ref{tab:table1},%
-\begin{table}[b]%The best place to locate the table environment is directly after its first reference in text
-\caption{\label{tab:table1}%
-A table that fits into a single column of a two-column layout. 
-Note that REV\TeX~4 adjusts the intercolumn spacing so that the table fills the
-entire width of the column. Table captions are numbered
-automatically. 
-This table illustrates left-, center-, decimal- and right-aligned columns,
-along with the use of the \texttt{ruledtabular} environment which sets the 
-Scotch (double) rules above and below the alignment, per APS style.
-}
-\begin{ruledtabular}
-\begin{tabular}{lcdr}
-\textrm{Left\footnote{Note a.}}&
-\textrm{Centered\footnote{Note b.}}&
-\multicolumn{1}{c}{\textrm{Decimal}}&
-\textrm{Right}\\
-\colrule
-1 & 2 & 3.001 & 4\\
-10 & 20 & 30 & 40\\
-100 & 200 & 300.0 & 400\\
-\end{tabular}
-\end{ruledtabular}
-\end{table}
-and Fig.~\ref{fig:epsart}.%
-\begin{figure}[b]
-\includegraphics{fig_1}% Here is how to import EPS art
-\caption{\label{fig:epsart} A figure caption. The figure captions are
-automatically numbered.}
-\end{figure}
-
-\section{Floats: Figures, Tables, Videos, etc.}
-Figures and tables are usually allowed to ``float'', which means that their
-placement is determined by \LaTeX, while the document is being typeset. 
-
-Use the \texttt{figure} environment for a figure, the \texttt{table} environment for a table.
-In each case, use the \verb+\caption+ command within to give the text of the
-figure or table caption along with the \verb+\label+ command to provide
-a key for referring to this figure or table.
-The typical content of a figure is an image of some kind; 
-that of a table is an alignment.%
-\begin{figure*}
-\includegraphics{fig_2}% Here is how to import EPS art
-\caption{\label{fig:wide}Use the figure* environment to get a wide
-figure that spans the page in \texttt{twocolumn} formatting.}
-\end{figure*}
-\begin{table*}
-\caption{\label{tab:table3}This is a wide table that spans the full page
-width in a two-column layout. It is formatted using the
-\texttt{table*} environment. It also demonstates the use of
-\textbackslash\texttt{multicolumn} in rows with entries that span
-more than one column.}
-\begin{ruledtabular}
-\begin{tabular}{ccccc}
- &\multicolumn{2}{c}{$D_{4h}^1$}&\multicolumn{2}{c}{$D_{4h}^5$}\\
- Ion&1st alternative&2nd alternative&lst alternative
-&2nd alternative\\ \hline
- K&$(2e)+(2f)$&$(4i)$ &$(2c)+(2d)$&$(4f)$ \\
- Mn&$(2g)$\footnote{The $z$ parameter of these positions is $z\sim\frac{1}{4}$.}
- &$(a)+(b)+(c)+(d)$&$(4e)$&$(2a)+(2b)$\\
- Cl&$(a)+(b)+(c)+(d)$&$(2g)$\footnotemark[1]
- &$(4e)^{\text{a}}$\\
- He&$(8r)^{\text{a}}$&$(4j)^{\text{a}}$&$(4g)^{\text{a}}$\\
- Ag& &$(4k)^{\text{a}}$& &$(4h)^{\text{a}}$\\
-\end{tabular}
-\end{ruledtabular}
-\end{table*}
-
-Insert an image using either the \texttt{graphics} or
-\texttt{graphix} packages, which define the \verb+\includegraphics{#1}+ command.
-(The two packages differ in respect of the optional arguments 
-used to specify the orientation, scaling, and translation of the image.) 
-To create an alignment, use the \texttt{tabular} environment. 
-
-The best place to locate the \texttt{figure} or \texttt{table} environment
-is immediately following its first reference in text; this sample document
-illustrates this practice for Fig.~\ref{fig:epsart}, which
-shows a figure that is small enough to fit in a single column. 
-
-In exceptional cases, you will need to move the float earlier in the document, as was done
-with Table~\ref{tab:table3}: \LaTeX's float placement algorithms need to know
-about a full-page-width float earlier. 
-
-Fig.~\ref{fig:wide}
-has content that is too wide for a single column,
-so the \texttt{figure*} environment has been used.%
-\begin{table}[b]
-\caption{\label{tab:table4}%
-Numbers in columns Three--Five are aligned with the ``d'' column specifier 
-(requires the \texttt{dcolumn} package). 
-Non-numeric entries (those entries without a ``.'') in a ``d'' column are aligned on the decimal point. 
-Use the ``D'' specifier for more complex layouts. }
-\begin{ruledtabular}
-\begin{tabular}{ccddd}
-One&Two&
-\multicolumn{1}{c}{\textrm{Three}}&
-\multicolumn{1}{c}{\textrm{Four}}&
-\multicolumn{1}{c}{\textrm{Five}}\\
-%\mbox{Three}&\mbox{Four}&\mbox{Five}\\
-\hline
-one&two&\mbox{three}&\mbox{four}&\mbox{five}\\
-He&2& 2.77234 & 45672. & 0.69 \\
-C\footnote{Some tables require footnotes.}
-  &C\footnote{Some tables need more than one footnote.}
-  & 12537.64 & 37.66345 & 86.37 \\
-\end{tabular}
-\end{ruledtabular}
-\end{table}
-
-The content of a table is typically a \texttt{tabular} environment, 
-giving rows of type in aligned columns. 
-Column entries separated by \verb+&+'s, and 
-each row ends with \textbackslash\textbackslash. 
-The required argument for the \texttt{tabular} environment
-specifies how data are aligned in the columns. 
-For instance, entries may be centered, left-justified, right-justified, aligned on a decimal
-point. 
-Extra column-spacing may be be specified as well, 
-although REV\TeX~4 sets this spacing so that the columns fill the width of the
-table. Horizontal rules are typeset using the \verb+\hline+
-command. The doubled (or Scotch) rules that appear at the top and
-bottom of a table can be achieved enclosing the \texttt{tabular}
-environment within a \texttt{ruledtabular} environment. Rows whose
-columns span multiple columns can be typeset using the
-\verb+\multicolumn{#1}{#2}{#3}+ command (for example, see the first
-row of Table~\ref{tab:table3}).%
-
-Tables~\ref{tab:table1}, \ref{tab:table3}, \ref{tab:table4}, and \ref{tab:table2}%
-\begin{table}[b]
-\caption{\label{tab:table2}
-A table with numerous columns that still fits into a single column. 
-Here, several entries share the same footnote. 
-Inspect the \LaTeX\ input for this table to see exactly how it is done.}
-\begin{ruledtabular}
-\begin{tabular}{cccccccc}
- &$r_c$ (\AA)&$r_0$ (\AA)&$\kappa r_0$&
- &$r_c$ (\AA) &$r_0$ (\AA)&$\kappa r_0$\\
-\hline
-Cu& 0.800 & 14.10 & 2.550 &Sn\footnotemark[1]
-& 0.680 & 1.870 & 3.700 \\
-Ag& 0.990 & 15.90 & 2.710 &Pb\footnotemark[2]
-& 0.450 & 1.930 & 3.760 \\
-Au& 1.150 & 15.90 & 2.710 &Ca\footnotemark[3]
-& 0.750 & 2.170 & 3.560 \\
-Mg& 0.490 & 17.60 & 3.200 &Sr\footnotemark[4]
-& 0.900 & 2.370 & 3.720 \\
-Zn& 0.300 & 15.20 & 2.970 &Li\footnotemark[2]
-& 0.380 & 1.730 & 2.830 \\
-Cd& 0.530 & 17.10 & 3.160 &Na\footnotemark[5]
-& 0.760 & 2.110 & 3.120 \\
-Hg& 0.550 & 17.80 & 3.220 &K\footnotemark[5]
-&  1.120 & 2.620 & 3.480 \\
-Al& 0.230 & 15.80 & 3.240 &Rb\footnotemark[3]
-& 1.330 & 2.800 & 3.590 \\
-Ga& 0.310 & 16.70 & 3.330 &Cs\footnotemark[4]
-& 1.420 & 3.030 & 3.740 \\
-In& 0.460 & 18.40 & 3.500 &Ba\footnotemark[5]
-& 0.960 & 2.460 & 3.780 \\
-Tl& 0.480 & 18.90 & 3.550 & & & & \\
-\end{tabular}
-\end{ruledtabular}
-\footnotetext[1]{Here's the first, from Ref.~\onlinecite{feyn54}.}
-\footnotetext[2]{Here's the second.}
-\footnotetext[3]{Here's the third.}
-\footnotetext[4]{Here's the fourth.}
-\footnotetext[5]{And etc.}
-\end{table}
-show various effects.
-A table that fits in a single column employs the \texttt{table}
-environment. 
-Table~\ref{tab:table3} is a wide table, set with the \texttt{table*} environment. 
-Long tables may need to break across pages. 
-The most straightforward way to accomplish this is to specify
-the \verb+[H]+ float placement on the \texttt{table} or
-\texttt{table*} environment. 
-However, the \LaTeXe\ package \texttt{longtable} allows headers and footers to be specified for each page of the table. 
-A simple example of the use of \texttt{longtable} can be found
-in the file \texttt{summary.tex} that is included with the REV\TeX~4
-distribution.
-
-There are two methods for setting footnotes within a table (these
-footnotes will be displayed directly below the table rather than at
-the bottom of the page or in the bibliography). The easiest
-and preferred method is just to use the \verb+\footnote{#1}+
-command. This will automatically enumerate the footnotes with
-lowercase roman letters. However, it is sometimes necessary to have
-multiple entries in the table share the same footnote. In this case,
-there is no choice but to manually create the footnotes using
-\verb+\footnotemark[#1]+ and \verb+\footnotetext[#1]{#2}+.
-\texttt{\#1} is a numeric value. Each time the same value for
-\texttt{\#1} is used, the same mark is produced in the table. The
-\verb+\footnotetext[#1]{#2}+ commands are placed after the \texttt{tabular}
-environment. Examine the \LaTeX\ source and output for
-Tables~\ref{tab:table1} and \ref{tab:table2}
-for examples.
-
-Video~\ref{vid:PRSTPER.4.010101} 
-illustrates several features new with REV\TeX4.2,
-starting with the \texttt{video} environment, which is in the same category with
-\texttt{figure} and \texttt{table}.%
-\begin{video}
-\href{http://prst-per.aps.org/multimedia/PRSTPER/v4/i1/e010101/e010101_vid1a.mpg}{\includegraphics{vid_1a}}%
- \quad
-\href{http://prst-per.aps.org/multimedia/PRSTPER/v4/i1/e010101/e010101_vid1b.mpg}{\includegraphics{vid_1b}}
- \setfloatlink{http://link.aps.org/multimedia/PRSTPER/v4/i1/e010101}%
- \caption{\label{vid:PRSTPER.4.010101}%
-  Students explain their initial idea about Newton's third law to a teaching assistant. 
-  Clip (a): same force.
-  Clip (b): move backwards.
- }%
-\end{video}
-The \verb+\setfloatlink+ command causes the title of the video to be a hyperlink to the
-indicated URL; it may be used with any environment that takes the \verb+\caption+
-command.
-The \verb+\href+ command has the same significance as it does in the context of
-the \texttt{hyperref} package: the second argument is a piece of text to be 
-typeset in your document; the first is its hyperlink, a URL.
-
-\textit{Physical Review} style requires that the initial citation of
-figures or tables be in numerical order in text, so don't cite
-Fig.~\ref{fig:wide} until Fig.~\ref{fig:epsart} has been cited.
 
 \begin{acknowledgments}
 We wish to acknowledge the support of the author community in using
@@ -475,9 +253,8 @@ REV\TeX{}, offering suggestions and encouragement, testing new versions,
 
 \appendix
 
-
 \section{Code}
-Below is the code for section \ref{q:3}
+Below is the code for section \ref{q:3}. It simulates a homogeneous Poisson process with rate parameter $\lambda=8$ per year. Time to 1000 events is simulated and the graph generated from this code is Figure \ref{fig:hpp}.
 \begin{verbatim}
 # Imports
 import numpy as np
@@ -525,9 +302,8 @@ if __name__ == '__main__': # main namespace
     plt.show()
 \end{verbatim}
 
-Below is the code for NHPP in section \ref{q:5}
+Below is the code for section \ref{q:5}. It simulates a Non-Homogeneous Poisson process with rate parameter $\lambda(t)=1.01^t$ that smoothly increases from 1 event per year. The time boundary is kept at 140 years as this is roughly the longest time it took the HPP to reach 1000 events. The graphs generated from this code are Figure \ref{fig:nhpp} and Figure \ref{fig:nhppent}. In the latter, $E[N(t)]$ is shown along with the realizations from the NHPP to show that both the lines adhere to each other.
 \begin{verbatim}
-
 # Imports
 import numpy as np
 import matplotlib.pyplot as plt
@@ -599,61 +375,6 @@ if __name__ == '__main__':
     plt.show()
 
 \end{verbatim}
-
-
-\section{Appendixes}
-
-To start the appendixes, use the \verb+\appendix+ command.
-This signals that all following section commands refer to appendixes
-instead of regular sections. Therefore, the \verb+\appendix+ command
-should be used only once---to setup the section commands to act as
-appendixes. Thereafter normal section commands are used. The heading
-for a section can be left empty. For example,
-\begin{verbatim}
-\appendix
-\section{}
-\end{verbatim}
-will produce an appendix heading that says ``APPENDIX A'' and
-\begin{verbatim}
-\appendix
-\section{Background}
-\end{verbatim}
-will produce an appendix heading that says ``APPENDIX A: BACKGROUND''
-(note that the colon is set automatically).
-
-If there is only one appendix, then the letter ``A'' should not
-appear. This is suppressed by using the star version of the appendix
-command (\verb+\appendix*+ in the place of \verb+\appendix+).
-
-\section{A little more on appendixes}
-
-Observe that this appendix was started by using
-\begin{verbatim}
-\section{A little more on appendixes}
-\end{verbatim}
-
-Note the equation number in an appendix:
-\begin{equation}
-E=mc^2.
-\end{equation}
-
-\subsection{\label{app:subsec}A subsection in an appendix}
-
-You can use a subsection or subsubsection in an appendix. Note the
-numbering: we are now in Appendix~\ref{app:subsec}.
-
-Note the equation numbers in this appendix, produced with the
-subequations environment:
-\begin{subequations}
-\begin{eqnarray}
-E&=&mc, \label{appa}
-\\
-E&=&mc^2, \label{appb}
-\\
-E&\agt& mc^3. \label{appc}
-\end{eqnarray}
-\end{subequations}
-They turn out to be Eqs.~(\ref{appa}), (\ref{appb}), and (\ref{appc}).
 
 % The \nocite command causes all entries in a bibliography to be printed out
 % whether or not they are actually referenced in the text. This is appropriate
