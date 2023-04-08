@@ -27,6 +27,10 @@ if __name__ == '__main__': # main namespace
     # Make plots
     fig , ax = plt.subplots()
     ax.step(hpp_event_times , events , label = f"$\lambda$ = {l}") # step graph
+    # Integrating the rate function to get E[N(t)]
+    x = np.arange(120)
+    y = l*x
+    ax.plot(x , y , label = r'$E[N(t)] = \lambda t$')
     ax.set_xlabel(r'$t$')
     ax.set_ylabel(r'$N(t)$')
     ax.set_title('Homogeneous Poisson process')
