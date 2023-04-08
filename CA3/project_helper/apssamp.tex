@@ -28,18 +28,28 @@
 \usepackage{dcolumn}% Align table columns on decimal point
 \usepackage{bm}% bold math
 \usepackage{amsthm}%theorems and stuff
-%\usepackage{algpseudocode}%algorithm writing
-%\usepackage{algorithm}% algorithm writing
 \usepackage[ruled,lined]{algorithm2e}
 \usepackage{svg}
 \usepackage{float}
-%\usepackage{hyperref}% add hypertext capabilities
-%\usepackage[mathlines]{lineno}% Enable numbering of text and display math
-%\linenumbers\relax % Commence numbering lines
+\usepackage{glossaries}
 \setlength\parindent{0pt} % zero indent
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 
+\makeglossaries
+
+\newglossaryentry{latex}
+{
+    name=latex,
+    description={Is a markup language specially suited 
+    for scientific documents}
+}
+
+\newglossaryentry{maths}
+{
+    name=mathematics,
+    description={Mathematics is what mathematicians do}
+}
 
 %\usepackage[showframe,%Uncomment any one of the following lines to test 
 %%scale=0.7, marginratio={1:1, 2:3}, ignoreall,% default settings
@@ -61,65 +71,35 @@
  Department of Computer Science, University of Exeter
 }%
 
-%\collaboration{MUSO Collaboration}%\noaffiliation
 
-%\author{Charlie Author}
- %\homepage{http://www.Second.institution.edu/~Charlie.Author}
-%\affiliation{
-%Second institution and/or address\\
-% This line break forced% with \\
-%}%
-%\affiliation{
-% Third institution, the second for Charlie Author
-%}%
-%\author{Delta Author}
-%\affiliation{%
-% Authors' institution and/or address\\
-% This line break forced with \textbackslash\textbackslash
-%}%
-
-%\collaboration{CLEO Collaboration}%\noaffiliation
-
-\date{\today}% It is always \today, today,
+\date{April, 2023}% It is always \today, today,
              %  but any date may be explicitly specified
 
 \begin{abstract}
 This project is about Non-Homogeneous Poisson processes and how to simulate them. We will be reviewing the thinning algorithm of Lewis and Shedler (1979) for simulating NHPP.
-%\begin{description}
-%\item[Usage]
-%Secondary publications and information retrieval purposes.
-%\item[Structure]
-%You may use the \texttt{description} environment to structure your abstract;
-%use the optional argument of the \verb+\item+ command to give the category of each item. 
-%\end{description}
+
 \end{abstract}
 
-%\keywords{Suggested keywords}%Use showkeys class option if keyword
-                              %display desired
 \maketitle
-
-%\tableofcontents
 
 \section{\label{sec:level1}Introduction}
 
+Homogeneous Poisson processes are the natural representation of processes occuring in time. As they follow a fixed rate of `event occurrence', they are unable to model processes with varying incidence rate, such as shocks before and after earthquakes \cite{vere-jones_1970}, fluctuations in neural data \cite{gabbiani_cox_2010}, events with time-of-day patterns or those showing long-term growth or decay.
+
 This report will be loosely structured according to the following points:
 \begin{enumerate}
-\item Explanataion of what is meant by a Non-Homogeneous Poisson Process (NHPP) accompanied by clear mathematical definition;
-\item Review of the thinning algorithm of Lewis and Shedler (1979) for simulating NHPP, with brief description of the algorithm, and its main benefits compared to other approaches;
+\item Explanation of a Non-Homogeneous Poisson Process (NHPP) accompanied by clear mathematical definition;
+\item Review of the thinning algorithm of Lewis and Shedler (1979) \cite{lewis_shedler_1979} for simulating NHPP, with brief description of the algorithm, and its main benefits compared to other approaches;
 \item Simulation of occurrence of 1000 successive events ${t_1, t_2, . . . , t_{1000}}$ for a homogeneous Poisson process having a rate of 8 events per year, followed by visual representation of the same;
-%Denoting the number of events in the time interval $[0, t]$ by $N(t)$, make a figure showing $N(t_i)$ versus $t_i$ for $i = 1, 2, . . . , 1000$ and comment on the main features that can be seen.
-\item Determining whether the thinning algorithm can be used on the previous homogeneous Poisson process data to simulate an NHPP with a rate function that increases smoothly from 1 event per year at $t = 0$ by 1\% per year, i.e. $(t) = (1.01)^t$;
+
+\item Determining whether the thinning algorithm can be used on the previous homogeneous Poisson process data to simulate an NHPP with a rate function that increases smoothly from 1 event per year at $t = 0$ by 1\% per year, i.e. $\lambda(t) = (1.01)^t$;
 \item Code to find occurence times for a NHPP having the rate function $\lambda(t) = (1.01)^t$ by using the thinning algorithm;
 \item Comparison of the plots of HPP and NHPP to demonstrate differences between the two.
 
-%Make a figure showing $N(t)$ versus $t$ for your NHPP simulation and compare it to what was shown in the figure for the homogeneous Poisson process. By integrating the rate function, add a line to your figure showing the expectation $E[N(t)]$ versus $t$.
 \end{enumerate}
 
 \section{\label{q:1}Description and Mathematical Definition}
-The following section details what is meant by a Non-Homogeneous Poisson Process (NHPP) giving a clear
-mathematical definition.\\
-
-A non-homogeneous Poisson process can be thought of as a generalization of the homogeneous Poisson process. As opposed to its homogeneous counterpart where rate of occurrence of events is constant (denoted by $\lambda$), here the rate is a function of time, denoted by $\lambda(t)$. Thus, the number of occrrences in the interval $(0,T]$ follows Poisson distribution $Pois(\int_{0}^{T}\lambda(t)dt)$. More formally, allowing the rate parameter to vary with time results in the following definition.
+A non-homogeneous Poisson process can be thought of as a generalization of the homogeneous Poisson process. As opposed to its homogeneous counterpart where rate of occurrence of events is constant (denoted by $\lambda$), here the rate is a function of time, denoted by $\lambda(t)$. Thus, the number of occurrences in the interval $(0,T]$ follows Poisson distribution $Pois(\int_{0}^{T}\lambda(t)dt)$ \cite{chen}. More formally, allowing the rate parameter to vary with time results in the following definition.
 \begin{definition}[Ross, 2006, p.339, Definition 5.4] \cite{Ross_2006} The counting process ${N(t), t \ge 0}$ is said to be a nonhomogeneous Poisson process with intensity function $\lambda(t) \ge 0, t \ge 0$, if
 \begin{enumerate}
 \item $N(0) = 0$
@@ -127,7 +107,7 @@ A non-homogeneous Poisson process can be thought of as a generalization of the h
 \item $P{N(t + h) - N(h) = 1} = \lambda(t)h + o(h)$
 \item $P{N(t + h) - N(h) \ge 2} = o(h)$
 \end{enumerate}
-where $o(h)$ denotes higher order terms of $h$.
+where $o(h)$ carries its usual meaning - a function $\phi(h)$, that satisfies the condition that $\frac{\phi(h)}{h}\to\infty$ as $h\to\infty$ \cite{billingsley_1995}.
 \end{definition}
 
 Time sampling an ordinary Poisson process (with constant rate $\lambda$) results in a Non-Homogeneous Poisson process. Given $\{N(t), t \ge 0\}$, a Poisson process wih rate $\lambda$, if the event occurring at time $t$ is counted with probability $p(t)$, then $\{N_c(t) , t\ge 0\}$ is a Non-Homogeneous Poisson process \cite{Ross_2006}.
@@ -136,13 +116,15 @@ Time sampling an ordinary Poisson process (with constant rate $\lambda$) results
 
 
 \subsubsection{Some Other Algorithms}
-There exist other algorithms for simulating Poisson processes.
+There exist other algorithms for simulating Poisson processes, a few of which are briefly described.
 \begin{enumerate}
-\item Time-scale transformation of a homogeneous Poisson process via inverse of the integrated rate function $\Lambda(x)$
-\item Generate intervals between the points individually
-\item Order statistics from Poisson variates
-\item Log-linear rate function
+\item Time-scale transformation of a homogeneous Poisson process via inverse of the integrated rate function $\Lambda(x)$. Cinlar \cite{cinlar1975introduction} states that the random variables $T1, T2, . . .$ are event times corresponding to a nonhomogeneous Poisson process with expectation function $\Lambda(t)$ if and only if $\Lambda(T1),\Lambda(T2), . . .$ are the event times corresponding to a homogeneous Poisson process with rate one. This of course requires the inverse of the integrated rate function $\Lambda(t)$ to be computed, which may prove costly and inefficient.
+
+\item Another method is to generate intervals between the points individually \cite{pasupathy}. It follows a similar inversion approach as the first method. Considering the $i$th inter-event time $X_i = T_i+1 - T_i$, conditional on the first $i$ event times $T_1 = t_1, T_2 = t_2, . . . , T_i = t_i$, its cdf can be derived as $Fti = 1 - e^{-\Lambda(ti + x) + \Lambda(ti)}$. Then $X_{i+1} - X{i}$ can be generated as $X_{i+1} - X{i} = F^{-1}(U_i)$, where $U_i \sim Unif(0,1)$. As stated in the original paper \cite{lewis_shedler_1979}, this process involves not only the computation of the inverse cdf, but the distribution has different parameters for each interval.
+
+\item Simulation of Non-Homogeneous Poisson variates can be done through by generating order statistics from a distribution with cdf $F(t) = \Lambda(t)/\Lambda(t_0)$ for $t\in [0,t_0]$ \cite{lewis_shedler_1976}. Formally, let $T_1 , T_2 , ...$ be time(s) to event for a Non-Homogeneous Poisson process with integrated rate function $\Lambda(t)$. Conditional on having observed $N(t_0) = n$ points in $(0,t_0]$, $T_k$ is the $k$th order statistic from a distribution with cdf $F(t) = \Lambda(t) / \Lambda(t_0)$.
 \end{enumerate}
+
 \subsubsection{The Thinning Algorithm}
 To construct a Non-Homogeneous Poisson process $\{N(t) , t \ge 0 \}$, with rate parameter $\lambda(t)$, over the interval $(0,T]$, the algorithm starts with a Non-Homogeneous Poisson process $\{N^{*}(t) , t \ge 0 \}$, with rate parameter $\bar{\lambda}(t)$ that dominates the set $\lambda(t)$ for all $t \in (0,T]$, that is 
 \begin{gather*}
@@ -199,7 +181,7 @@ Set $n = n + 1 $\;
 }
 \end{algorithm}
 
-Uniform random numbers are used to generate Poisson variates by using the following algorithm, that can be found in \cite{chen}. Full implementation in Python can be found in the Appendix. Figure \ref{fig:hpp} shows the result of simulating a homogeneous Poisson process.
+Uniform random numbers are used to generate Poisson variates by using the following algorithm, that can be found in \cite{chen}. Full implementation in Python can be found in the Appendix. Fig \ref{fig:hpp} shows the result of simulating a homogeneous Poisson process.
 
 \begin{figure}[H]
 \centering
@@ -207,11 +189,17 @@ Uniform random numbers are used to generate Poisson variates by using the follow
 \caption{\label{fig:hpp}Simulation of the time of occurrence of 1000 successive events for a homogeneous Poisson process having a rate of 8 events per year. $N(t)$ denotes the number of events occurring in the time period $[0,t]$.}
 \end{figure}
 
-The graph appears relatively linear. This would be expected as the rate of occurrence of events remains constant over any interval of time $(a,b)$ and hence the slope corresponding to the number of events over time (i.e. rate) also remains the same.
+The graph appears relatively linear. This would be expected as the rate of occurrence of events remains constant over any interval of time $(a,b)$ and hence the slope corresponding to the number of events over time (i.e. rate) also remains the same. A comparison agains $E[N(t)] = \lambda t$ has been plotted in Fig \ref{hppent} to demonstrate the linearity of the HPP.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{HPP_ENt.png}
+\caption{\label{fig:hppent}Expected number of events follows a straight line with slope, $\lambda$ = 8. $N(t)$ denotes the number of events occurring in the time period $[0,t]$.}
+\end{figure}
 
 \section{\label{q:4}NHPP with a smoothly increasing rate function}
 
-An NHPP is considered with a rate function that increases smoothly from 1 event per year at $t = 0$ by $1\%$ per year, i.e. $\lambda(t) = (1.01)^t$. Looking at the previous homogeneous Poisson process from \ref{q:3}, it can be seen that the maximum time taken to accumulate 1000 events is $\sim140$. Figure \ref{fig:hpp_many_sim} shows this. Therefore, the maximum rate for the NHPP would be $(1.01)^{140} = 4.027$. The rate for the previous homogeneous Poisson process was 8. Hence, this is within the bounds of the original process. Thinning can be applied to simulate the NHPP from the previous HPP data.
+An NHPP is considered with a rate function that increases smoothly from 1 event per year at $t = 0$ by $1\%$ per year, i.e. $\lambda(t) = (1.01)^t$. Looking at the previous homogeneous Poisson process from \ref{q:3}, it can be seen that the maximum time taken to accumulate 1000 events is $\sim140$. Fig \ref{fig:hpp_many_sim} shows this. Therefore, the maximum rate for the NHPP would be $(1.01)^{140} = 4.027$. The rate for the previous homogeneous Poisson process was 8. Hence, this is within the bounds of the original process. Thinning can be applied to simulate the NHPP from the previous HPP data.
 
 \begin{figure}
 \centering
@@ -219,16 +207,16 @@ An NHPP is considered with a rate function that increases smoothly from 1 event 
 \caption{\label{fig:hpp_many_sim}Time in years to accumulate 1000 events at 8 per year. 10,000 iterations performed to generate histogram.}
 \end{figure}
 
-\section{\label{q:5}Perform the Thinning Algorithm with data from Homogeneous Poisson Process}
+\section{\label{q:5}Performing the Thinning Algorithm with data from Homogeneous Poisson Process}
 Using the thinning algorithm, the data points from the previous homogeneous process are time-sampled to construct a Non-Homogeneous process. 
 
 \section{\label{q:6}Graphical Comparison of HPP and NHPP}
-Figure \ref{fig:nhpp} showcases the cumulative events $N(t)$ against time $t$. It is observed that, as opposed to homogeneous Poisson process, the line is not quite linear - the slope increases as time progresses. This can be expected as the rate parameter $\lambda(t) = (1.01)^t$ also increases with time. Due to deletion of points from the original homogeneous process, it is also noted that the total number of points has decreased from 1000 to just over 300.
+Fig \ref{fig:nhpp} showcases the cumulative events $N(t)$ against time $t$. It is observed that, as opposed to homogeneous Poisson process, the line is not quite linear - the slope increases as time progresses. This can be expected as the rate parameter $\lambda(t) = (1.01)^t$ also increases with time. Due to deletion of points from the original homogeneous process, it is also noted that the total number of points has decreased from 1000 to just over 300.
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{NHPP.png}
-\caption{\label{fig:nhpp}Accumulated events following a NHPP with rate parameter $\lambda(t) = 1.01^t$}
+\caption{\label{fig:nhpp}Accumulated events following a NHPP with rate parameter $\lambda(t) = 1.01^t$.}
 \end{figure}
 
 By integrating the rate function, we get 
@@ -237,24 +225,20 @@ By integrating the rate function, we get
 =1.01^t/ln(1.01) + C
 \end{gather*}
 
-Noting the boundary condition that at $t=0$, $E[N(t)]=0$, we have $C = \frac{1.01^0}{ln(1.01)} = 100.499$. Thus,  $E[N(t)] = \frac{1.01^0}{ln(1.01)} - 100.499$. Plotting this onto the earlier graph, Figure \ref{fig:nhppent} is obtained. It can be seen that the orange line closely follows the blue stepped graph.
+Noting the boundary condition that at $t=0$, $E[N(t)]=0$, we have $C = \frac{1.01^0}{ln(1.01)} = 100.499$.\\
+
+Thus,  $E[N(t)] = \frac{1.01^0}{ln(1.01)} - 100.499$. Plotting this onto the earlier graph, Fig \ref{fig:nhppent} is obtained. It can be seen that the orange line closely follows the blue stepped graph.
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{NHPP_ENt.png}
-\caption{\label{fig:nhppent}$E[N(t)]$, denoted by $\frac{1.01^0}{ln(1.01)} - 100.499$ superimposed on the NHPP}
+\caption{\label{fig:nhppent}$E[N(t)]$, denoted by $\frac{1.01^0}{ln(1.01)} - 100.499$ superimposed on the NHPP.}
 \end{figure}
-
-\begin{acknowledgments}
-We wish to acknowledge the support of the author community in using
-REV\TeX{}, offering suggestions and encouragement, testing new versions,
-\dots.
-\end{acknowledgments}
 
 \appendix
 
 \section{Code}
-Below is the code for section \ref{q:3}. It simulates a homogeneous Poisson process with rate parameter $\lambda=8$ per year. Time to 1000 events is simulated and the graph generated from this code is Figure \ref{fig:hpp}.
+Below is the code for section \ref{q:3}. It simulates a homogeneous Poisson process with rate parameter $\lambda=8$ per year. Time to 1000 events is simulated and the graph generated from this code is Fig \ref{fig:hpp}.
 \begin{verbatim}
 # Imports
 import numpy as np
@@ -302,7 +286,7 @@ if __name__ == '__main__': # main namespace
     plt.show()
 \end{verbatim}
 
-Below is the code for section \ref{q:5}. It simulates a Non-Homogeneous Poisson process with rate parameter $\lambda(t)=1.01^t$ that smoothly increases from 1 event per year. The time boundary is kept at 140 years as this is roughly the longest time it took the HPP to reach 1000 events. The graphs generated from this code are Figure \ref{fig:nhpp} and Figure \ref{fig:nhppent}. In the latter, $E[N(t)]$ is shown along with the realizations from the NHPP to show that both the lines adhere to each other.
+Below is the code for section \ref{q:5}. It simulates a Non-Homogeneous Poisson process with rate parameter $\lambda(t)=1.01^t$ that smoothly increases from 1 event per year. The time boundary is kept at 140 years as this is roughly the longest time it took the HPP to reach 1000 events. The graphs generated from this code are Fig \ref{fig:nhpp} and Fig \ref{fig:nhppent}. In the latter, $E[N(t)]$ is shown along with the realizations from the NHPP to demonstrate	 that both the lines adhere to each other.
 \begin{verbatim}
 # Imports
 import numpy as np
@@ -334,17 +318,17 @@ def gen_nhpp(lmbda_bar = 8 ,  T = 140):
         
         if t[-1] > T:
             num_events = np.arange(len(t[:-1]))
-            print(f'Breakpoint 1: the number of events \
-            is {num_events[-1]}, and the time taken to \
-            reach them is {t[:-1][-1]}')
+            print(f'Breakpoint 1: the number of \
+            events is {num_events[-1]}, and the \
+            time taken to reach them is {t[:-1][-1]}')
             # get time to event & count the 
             # number of events
             return t[:-1] , num_events
     else:
         num_events = np.arange(len(t))
-        print(f'Breakpoint 2: the number of events is \
-        {num_events[-1]}, and the time taken to reach \
-        them is {t[-1]}')
+        print(f'Breakpoint 2: the number of \
+        events is {num_events[-1]}, and the \
+        time taken to reach them is {t[-1]}')
         # get time to event & count the number 
         # of events
         return t , num_events
