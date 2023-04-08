@@ -84,7 +84,8 @@ This project is about Non-Homogeneous Poisson processes and how to simulate them
 
 \section{\label{sec:level1}Introduction}
 
-Homogeneous Poisson processes are the natural representation of processes occuring in time. As they follow a fixed rate of `event occurrence', they are unable to model processes with varying incidence rate, such as shocks before and after earthquakes \cite{vere-jones_1970}, fluctuations in neural data \cite{gabbiani_cox_2010}, events with time-of-day patterns or those showing long-term growth or decay.
+Homogeneous Poisson processes are the natural representation of processes occuring in time. As they follow a fixed rate of `event occurrence', they are unable to model processes with varying incidence rate, such as shocks before and after earthquakes \cite{vere-jones_1970}, fluctuations in neural data \cite{gabbiani_cox_2010}, events with time-of-day patterns or those showing long-term growth or decay.\\
+
 
 This report will be loosely structured according to the following points:
 \begin{enumerate}
@@ -99,7 +100,8 @@ This report will be loosely structured according to the following points:
 \end{enumerate}
 
 \section{\label{q:1}Description and Mathematical Definition}
-A non-homogeneous Poisson process can be thought of as a generalization of the homogeneous Poisson process. As opposed to its homogeneous counterpart where rate of occurrence of events is constant (denoted by $\lambda$), here the rate is a function of time, denoted by $\lambda(t)$. Thus, the number of occurrences in the interval $(0,T]$ follows Poisson distribution $Pois(\int_{0}^{T}\lambda(t)dt)$ \cite{chen}. More formally, allowing the rate parameter to vary with time results in the following definition.
+A non-homogeneous Poisson process can be thought of as a generalization of the homogeneous Poisson process. As opposed to its homogeneous counterpart where rate of occurrence of events is constant (denoted by $\lambda$), here the rate is a function of time, denoted by $\lambda(t)$. The process is specified either through its rate function $\lambda(t)$ (when it exists), or more generally through its expectation function $\Lambda(t) \equiv  E[N(t)]$. $\Lambda(\cdot)$ is therefore, monotone, non-decreasing and right-continuous. When the rate function $\lambda(t)$ exists, $\Lambda(t) = \int_{0}^{t}\lambda(y) dy$ \cite{pasupathy}. Thus, the number of occurrences in the interval $(0,T]$ follows Poisson distribution $Pois(\int_{0}^{T}\lambda(t)dt)$ \cite{chen}. More formally, allowing the rate parameter to vary with time results in the following definition.
+
 \begin{definition}[Ross, 2006, p.339, Definition 5.4] \cite{Ross_2006} The counting process ${N(t), t \ge 0}$ is said to be a nonhomogeneous Poisson process with intensity function $\lambda(t) \ge 0, t \ge 0$, if
 \begin{enumerate}
 \item $N(0) = 0$
@@ -114,7 +116,6 @@ Time sampling an ordinary Poisson process (with constant rate $\lambda$) results
 
 \section{\label{q:2}Review of the Thinning Algorithm}
 
-
 \subsubsection{Some Other Algorithms}
 There exist other algorithms for simulating Poisson processes, a few of which are briefly described.
 \begin{enumerate}
@@ -122,7 +123,7 @@ There exist other algorithms for simulating Poisson processes, a few of which ar
 
 \item Another method is to generate intervals between the points individually \cite{pasupathy}. It follows a similar inversion approach as the first method. Considering the $i$th inter-event time $X_i = T_i+1 - T_i$, conditional on the first $i$ event times $T_1 = t_1, T_2 = t_2, . . . , T_i = t_i$, its cdf can be derived as $Fti = 1 - e^{-\Lambda(ti + x) + \Lambda(ti)}$. Then $X_{i+1} - X{i}$ can be generated as $X_{i+1} - X{i} = F^{-1}(U_i)$, where $U_i \sim Unif(0,1)$. As stated in the original paper \cite{lewis_shedler_1979}, this process involves not only the computation of the inverse cdf, but the distribution has different parameters for each interval.
 
-\item Simulation of Non-Homogeneous Poisson variates can be done through by generating order statistics from a distribution with cdf $F(t) = \Lambda(t)/\Lambda(t_0)$ for $t\in [0,t_0]$ \cite{lewis_shedler_1976}. Formally, let $T_1 , T_2 , ...$ be time(s) to event for a Non-Homogeneous Poisson process with integrated rate function $\Lambda(t)$. Conditional on having observed $N(t_0) = n$ points in $(0,t_0]$, $T_k$ is the $k$th order statistic from a distribution with cdf $F(t) = \Lambda(t) / \Lambda(t_0)$.
+\item Simulation of Non-Homogeneous Poisson variates can be done through by generating order statistics from a distribution with cdf $F(t) = \Lambda(t)/\Lambda(t_0)$ for $t\in [0,t_0]$ \cite{lewis_shedler_1976}. Formally, let $T_1 , T_2 , ...$ be time(s) to event for a Non-Homogeneous Poisson process with integrated rate function $\Lambda(t)$. Conditional on having observed $N(t_0) = n$ points in $(0,t_0]$, $T_k$ is the $k$th order statistic from a distribution with cdf $F(t) = \Lambda(t) / \Lambda(t_0)$. Ordering can prove to be computationally expensive.
 \end{enumerate}
 
 \subsubsection{The Thinning Algorithm}
