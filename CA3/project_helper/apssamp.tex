@@ -31,25 +31,18 @@
 \usepackage[ruled,lined]{algorithm2e}
 \usepackage{svg}
 \usepackage{float}
-\usepackage{glossaries}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
 \setlength\parindent{0pt} % zero indent
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
-
-\makeglossaries
-
-\newglossaryentry{latex}
-{
-    name=latex,
-    description={Is a markup language specially suited 
-    for scientific documents}
-}
-
-\newglossaryentry{maths}
-{
-    name=mathematics,
-    description={Mathematics is what mathematicians do}
-}
 
 %\usepackage[showframe,%Uncomment any one of the following lines to test 
 %%scale=0.7, marginratio={1:1, 2:3}, ignoreall,% default settings
@@ -207,7 +200,7 @@ An NHPP is considered with a rate function that increases smoothly from 1 event 
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{HPP_many_sim.png}
-\caption{\label{fig:hpp_many_sim}Time in years to accumulate 1000 events at 8 per year. 10,000 iterations performed to generate histogram.}
+\caption{\label{fig:hpp_many_sim}Time in years to accumulate 1000 events at 8 per year. 10,000 iterations performed to generate histogram. Y-axis represents density.}
 \end{figure}
 
 \section{\label{q:5}Performing the Thinning Algorithm with data from Homogeneous Poisson Process}
@@ -219,7 +212,7 @@ Fig \ref{fig:nhpp} showcases the cumulative events $N(t)$ against time $t$. It i
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{NHPP.png}
-\caption{\label{fig:nhpp}Accumulated events following an NHPP with rate parameter $\lambda(t) = 1.01^t$.}
+\caption{\label{fig:nhpp}Accumulated events following an NHPP with rate parameter $\lambda(t) = 1.01^t$. $N(t)$ represents cumulative events. $t$ denotes time}
 \end{figure}
 
 By integrating the rate function, we get 
@@ -233,7 +226,7 @@ Noting the boundary condition that at $t=0$, $E[N(t)]=0$, we have $C = \frac{1.0
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{NHPP_ENt.png}
-\caption{\label{fig:nhppent}$E[N(t)]$, denoted by $\frac{1.01^0}{ln(1.01)} - 100.499$ superimposed on the NHPP.}
+\caption{\label{fig:nhppent}$E[N(t)]$, denoted by $\frac{1.01^0}{ln(1.01)} - 100.499$ superimposed on the NHPP. $N(t)$ represents cumulative events. $t$ denotes time}
 \end{figure}
 
 Thus,  $E[N(t)] = \frac{1.01^t}{ln(1.01)} - 100.499$. Plotting this onto the earlier graph, Fig \ref{fig:nhppent} is obtained. It can be seen that the orange line closely follows the blue stepped graph.
@@ -241,47 +234,49 @@ Thus,  $E[N(t)] = \frac{1.01^t}{ln(1.01)} - 100.499$. Plotting this onto the ear
 \appendix
 
 \section{\label{app:hppcode}Code for HPP}
-Below is the code for section \ref{q:3}. It simulates a homogeneous Poisson process with rate parameter $\lambda=8$ per year. Time to 1000 events is simulated and the graph generated from this code is Fig \ref{fig:hpp}.
+Below is the code for section \ref{q:3}. It simulates a homogeneous Poisson process with rate parameter $\lambda=8$ per year. Time to 1000 events is simulated and the graph generated from this code is Fig \ref{fig:hpp}. .py files can be found \href{https://github.com/sourasen1011/Stochastic_Processes/blob/main/CA3/project_helper/HPP.py}{here}.
 \begin{verbatim}
 # Imports
 import numpy as np
 import matplotlib.pyplot as plt
-
 # define hpp function
-def gen_hpp(lmbda ,  N):
+def gen_hpp(lmbda , N):
     '''
     param lmbda: rate parameter
     N: Number of events
     '''
     # inits
     t = [0]
-
     # begin loop
     while True:
         # generate uniform r.v. ~ Unif[0,1]
-        u = np.random.uniform(0,1) 
+        u = np.random.uniform(0,1)
         # generate w ~ Exponential(lambda)
-        w = - np.log(u)/lmbda 
+        w = - np.log(u)/lmbda
         t.append(t[-1] + w)
         # exit condition
         if len(t) > N:
-        	  # get time to event & count the 
-        	  # number of events
-           return t , np.arange(len(t)) 
+            # get time to event & count the
+            # number of events
+            return t , np.arange(len(t))
 
 if __name__ == '__main__': # main namespace
     l , N = 8 , 1000
-    # generate the time(s) to event(s) 
-    # AND count of events 
+    # generate the time(s) to event(s)
+    # AND count of events
     hpp_event_times , events = \
-    gen_hpp(lmbda = l , N = N) 
+    gen_hpp(lmbda = l , N = N)
     print(events , hpp_event_times) # debug
-    
     # Make plots
     fig , ax = plt.subplots()
     # step graph
-    ax.step(hpp_event_times , events , 
-    		label = f"$\lambda$ = {l}" , lw = 0.5) 
+    ax.step(hpp_event_times , events ,
+    label = f"$\lambda$ = {l}" , lw = 0.5)
+    # Integrating the rate function to 
+    # get E[N(t)]
+    x = np.arange(120)
+    y = l*x
+    # Plot
     ax.set_xlabel(r'$t$')
     ax.set_ylabel(r'$N(t)$')
     ax.set_title('Homogeneous Poisson process')
@@ -290,7 +285,7 @@ if __name__ == '__main__': # main namespace
 \end{verbatim}
 
 \section{\label{app:nhppcode}Code for NHPP}
-Below is the code for section \ref{q:5}. It simulates a Non-Homogeneous Poisson process with rate parameter $\lambda(t)=1.01^t$ that smoothly increases from 1 event per year. The time boundary is kept at 140 years as this is roughly the longest time it took the HPP to reach 1000 events. The graphs generated from this code are Fig \ref{fig:nhpp} and Fig \ref{fig:nhppent}. In the latter, $E[N(t)]$ is shown along with the realizations from the NHPP to demonstrate	 that both the lines adhere to each other.
+Below is the code for section \ref{q:5}. It simulates a Non-Homogeneous Poisson process with rate parameter $\lambda(t)=1.01^t$ that smoothly increases from 1 event per year. The time boundary is kept at 140 years as this is roughly the longest time it took the HPP to reach 1000 events. The graphs generated from this code are Fig \ref{fig:nhpp} and Fig \ref{fig:nhppent}. In the latter, $E[N(t)]$ is shown along with the realizations from the NHPP to demonstrate	 that both the lines adhere to each other. .py files can be found \href{https://github.com/sourasen1011/Stochastic_Processes/blob/main/CA3/project_helper/NHPP.py}{here}.
 \begin{verbatim}
 # Imports
 import numpy as np
